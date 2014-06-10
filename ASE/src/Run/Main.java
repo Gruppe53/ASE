@@ -3,6 +3,7 @@ import Program.*;
 
 public class Main {
 	public Main() {
-		System.out.println("y00000");
+		GUI GUI = new Program.GUI();
+		Terminal terminal = new Program.Terminal();
 	}
 }
