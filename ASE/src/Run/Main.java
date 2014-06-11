@@ -1,9 +1,9 @@
 package Run;
-import Program.*;
+import program.*;
 
 public class Main {
 	public Main() {
-		GUI GUI = new Program.GUI();
-		Terminal terminal = new Program.Terminal();
+		GUI GUI = new program.GUI();
+		Terminal terminal = new program.Terminal();
 	}
 }
