@@ -4,8 +4,11 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
+
 public class Terminal implements ITerminal {
 	private ITerminalConnection con;
+	private int runtime = 0;
 	
 	public Terminal(ITerminalConnection con) {
 		this.con = con;
@@ -48,17 +51,18 @@ public class Terminal implements ITerminal {
 	public String terminalOk() {
 		con.getTerminalResponse("Ok");
 		
-		int i = 0;
-		
-		if (i==0){
-			i++;
-			return terminalZero();
-			
+		if (runtime == 3){
+			runtime = 0;
 		}
-		else{
+		
+		if (runtime == 0){
+			runtime++;
+			return terminalZero();
+		}
+		else {
+			runtime++;
 			return terminalTare();
 		}
-	
 	
 	}
 

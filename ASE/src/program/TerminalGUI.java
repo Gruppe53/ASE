@@ -14,6 +14,7 @@ public class TerminalGUI extends JPanel {
 	private static final long serialVersionUTD = 1L;
 	
 	private ITerminal terminal;
+	Terminal Terminal = new Terminal(null); 
 	
 	private JPanel scaPanel = new JPanel(new MigLayout());
 	private JPanel conPanel = new JPanel();
