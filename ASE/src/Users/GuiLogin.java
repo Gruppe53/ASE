@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.sql.*;
+
 import DBaccess.*;
+
 import javax.swing.*;
 
 import net.miginfocom.swing.MigLayout;
@@ -91,7 +93,21 @@ public class GuiLogin extends JComponent {
 		
 		userLogin.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	userLogin();
+            	try {
+					userLogin();
+				} catch (InstantiationException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IllegalAccessException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
             }
         });
 		
@@ -102,7 +118,7 @@ public class GuiLogin extends JComponent {
         });
 	}
 			
-	private void userLogin() {
+	private void userLogin() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		Connector cn = new Connector();
 		String databaseUsername = "";
 		String databasePassword = "";
@@ -110,22 +126,31 @@ public class GuiLogin extends JComponent {
 		char[] pw = pass.getPassword();
 		try {
 			if (oprNr != null && pass!=null) {
-	    String sql = "SELECT * FROM users WHERE uid='" + oprNr + "' and password='" + pw + "'";
-	    ResultSet rs = cn.doQuery(sql);
-	    	while( rs.next()){
-	           databaseUsername = rs.getString("uid");
-	           databasePassword = rs.getString("Password");
+				String sql = "SELECT * FROM users WHERE uid='" + oprNr + "' and password='" + pw + "'";
+				ResultSet rs = cn.doQuery(sql);
+	    
+		    	while( rs.next()) {
+		           databaseUsername = rs.getString("uid");
+		           databasePassword = rs.getString("Password");
+		    	}
+		    	if (oprNr.equals(databaseUsername) && pw.equals(databasePassword)) {
+		    		userLogin.setEnabled(false);
+					oprId.setEnabled(false);
+					pass.setEnabled(false);
+					
+					try {
+						textArea.append("[" + getDate() + "] Logged in as " + opr.getOperator(oprNr) + "\n");
+					}
+					catch (DALException e) {
+						e.printStackTrace();
+					}
+		    	}
 	    	}
-	    	if (oprNr.equals(databaseUsername) && pw.equals(databasePassword)){
-	    		userLogin.setEnabled(false);
-				oprId.setEnabled(false);
-				pass.setEnabled(false);
-				
-				try {
-					textArea.append("[" + getDate() + "] Logged in as " + opr.getOperator(oprNr) + "\n");
-				}
-				catch (DALException e) {
-					e.printStackTrace();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	   
 	

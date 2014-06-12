@@ -1,8 +1,10 @@
 package Run;
 
 import java.awt.*;
+
 import javax.swing.*;
 
+import net.miginfocom.swing.MigLayout;
 import program.*;
 import Users.*;
 
@@ -22,11 +24,5 @@ public class Main extends JPanel{
 	
 	public Main() {
 		setLayout(new MigLayout());
-		
-		
 	}
-	
-		
-		
-	}
-
+}
