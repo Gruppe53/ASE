@@ -69,6 +69,10 @@ public class Terminal implements ITerminal {
 	
 	}
 
+	@Override
+	public String terminalOk2() {
+		return null;
+	}
 
 	@Override
 	public String getConnection() {

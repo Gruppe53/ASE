@@ -7,6 +7,7 @@ public interface ITerminal {
 	String terminalTare();
 	String terminalZero();
 	String terminalOk();
+	String terminalOk2();
 	String terminalDisplay();
 	String getConnection();
 }
