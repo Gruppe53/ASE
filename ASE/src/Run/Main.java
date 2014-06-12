@@ -55,9 +55,26 @@ public class Main extends JPanel{
 		terminalFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		terminalFrame.setBackground(Color.decode("#f0f0f0"));
 		terminalFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("materials/icon.png"));
+		terminalFrame.setResizable(false);
 		
-	}
 	
+		newContentPane = new Main();
+		newContentPane.setOpaque(true);
+		terminalFrame.setContentPane(newContentPane);
 		
+		terminalFrame.setLocationRelativeTo(null);
+		terminalFrame.pack();
+		terminalFrame.setVisible(true);
 		
+		}
+	public static void main(String[] args) {
+		javax.swing.SwingUtilities.invokeLater(new Runnable(){
+			public void run() {
+				createAndShowGUI("Scale");
+				
+			}
+		});
 	}
+		
+		
+}
