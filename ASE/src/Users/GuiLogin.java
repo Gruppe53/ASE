@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.sql.*;
+
 import javax.swing.*;
 
 import net.miginfocom.swing.MigLayout;
@@ -17,7 +18,6 @@ public class GuiLogin extends JComponent {
 	
 	private JPanel userPanel;
 	private JPanel ctrlPanel;
-	private JPanel cmdPanel;
 	private JScrollPane txtPanel;
 	
 	private JLabel userName;
@@ -33,7 +33,7 @@ public class GuiLogin extends JComponent {
 	
 	private JTextArea textArea = new JTextArea();;
 	
-	public UserDialog(IOperatorDAO opr, JTabbedPane tab) {
+	public GuiLogin(IOperatorDAO opr, JTabbedPane tab) {
 		this.opr = opr;
 		this.tab = tab;
 		
@@ -48,7 +48,7 @@ public class GuiLogin extends JComponent {
 		ctrlPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.decode("#d5dfe5")), "Login"));
 		ctrlPanel.setBackground(Color.white);
 		
-		userName = new JLabel("Operatør nr.:");
+		userName = new JLabel("Operatï¿½r nr.:");
 		userPass = new JLabel("Password:");
 		oprId = new JTextField(8);
 		oprId.setPreferredSize(new Dimension(98,20));
@@ -83,10 +83,10 @@ public class GuiLogin extends JComponent {
 		textArea.setWrapStyleWord(true);
 		textArea.setEditable(false);
 		textArea.append("[" + getDate() + "] Welcome...\n");
-		
-		
+				
 		userPanel.add(ctrlPanel, "wrap");
 		userPanel.add(txtPanel);
+		
 		add(userPanel);
 		
 		userLogin.addActionListener(new ActionListener() {
@@ -104,7 +104,46 @@ public class GuiLogin extends JComponent {
 			
 	private void userLogin() {
 		String oprNr = oprId.getText();
-		String pw = pass.getText();
+		
+		if(opr.tryLogin(oprNr, pass.getPassword())) {
+			tab.setEnabledAt(1, true);
+			
+			userLogout.setEnabled(true);
+			
+			userLogin.setEnabled(false);
+			oprId.setEnabled(false);
+			pass.setEnabled(false);
+			
+			try {
+				textArea.append("[" + getDate() + "] Logged in as " + opr.getOperator(oprNr) + "\n");
+			}
+			catch (DALException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	
+	private void userLogout() {
+		if(opr.getActive()) {
+			tab.setEnabledAt(1, false);
+			
+			userLogout.setEnabled(false);
+			userLogin.setEnabled(true);
+			oprId.setEnabled(true);
+			pass.setEnabled(true);
+			
+			opr.userLogout();
+			
+			textArea.append("[" + getDate() + "] Logged out.\n");
+		}
+	}
+
+	private String getDate() {
+		return new SimpleDateFormat("HH:mm:ss").format(new Date());
+	}
+	
+	/*String pw = pass.getText();
 		try {
 			if ( != null && pass!=null) {
 		Statement stmt = Connector.CreateStatement();
@@ -122,48 +161,6 @@ public class GuiLogin extends JComponent {
 
 	    } catch (SQLException err) {
 	        JOptionPane.showMessageDialog(this, err.getMessage());
-	    }
+	    }*/
 
-	}
-	}
-	private void userLogin() {
-		String oprNr = oprId.getText();
-		
-		if(opr.tryLogin(oprNr, pass.getPassword())) {
-			tab.setEnabledAt(1, true);
-			
-			userLogin.setEnabled(false);
-			oprId.setEnabled(false);
-			pass.setEnabled(false);
-			
-			try {
-				textArea.append("[" + getDate() + "] Logged in as " + opr.getOperator(oprId) + "\n");
-			}
-			catch (DALException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-	
-	private void userLogout() {
-		if(opr.getActive()) {
-			tab.setEnabledAt(1, false);
-			
-			userLogout.setEnabled(false);
-			userLogin.setEnabled(true);
-			cprFirst.setEnabled(true);
-			//cprSecond.setEnabled(true);
-			pass.setEnabled(true);
-			
-			opr.userLogout();
-			
-			textArea.append("[" + getDate() + "] Logged out.\n");
-		}
-	}
-	
-	
-	
-	private String getDate() {
-		return new SimpleDateFormat("HH:mm:ss").format(new Date());
-	}
 }
