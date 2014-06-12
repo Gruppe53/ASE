@@ -16,14 +16,17 @@ public class Terminal implements ITerminal {
 
 	@Override
 	public String terminalConnect(String host, String port) {
-		// TODO Auto-generated method stub
-		return null;
+		if(con.terminalConnect(host, port))
+			return getConnection();
+		else
+			return "Could not connect";
 	}
 
 	@Override
 	public String terminalDisconnect() {
-		// TODO Auto-generated method stub
-		return null;
+	con.terminalDisconnect();
+		
+		return getConnection();
 	}
 
 	@Override
