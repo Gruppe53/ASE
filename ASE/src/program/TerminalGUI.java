@@ -25,8 +25,9 @@ public class TerminalGUI extends JPanel {
 	// knapper
 	private JButton TerminalRead = new JButton("Read");
 	private JButton TerminalOk = new JButton("Ok");
-
+	private JButton TerminalOk2 = new JButton("Ok");
 	
+
 	// Udskrift
 	private JTextArea textArea = new JTextArea();
 
@@ -48,11 +49,15 @@ public class TerminalGUI extends JPanel {
 		TerminalRead.setEnabled(false);
 
 		TerminalOk.setEnabled(false);
+		
+		TerminalOk2.setEnabled (false);
 
 		
 		cmdPanel.add(TerminalRead);
 
 		cmdPanel.add(TerminalOk);
+		
+		cmdPanel.add(TerminalOk2);
 
 		
 		
@@ -89,7 +94,12 @@ public class TerminalGUI extends JPanel {
             }
         });
 		
-
+		
+		TerminalOk2.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                TerminalOk2();
+            }
+        });
 		
 		add(scaPanel);
 	}
@@ -112,7 +122,9 @@ public class TerminalGUI extends JPanel {
 		textArea.append("[" + getDate() + "]\t" + Terminal.terminalOk() + "\n");
 	}
 	
-	
+	private void TerminalOk2() {
+		textArea.append("[" + getDate() + "]\t" + Terminal.terminalOk2() + "\n");
+	}
 	
 	private String getDate() {
 		return new SimpleDateFormat("HH:mm:ss").format(new Date());
