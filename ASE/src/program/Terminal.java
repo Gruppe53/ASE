@@ -1,6 +1,8 @@
 package program;
 
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Terminal implements ITerminal {
 	private ITerminalConnection con;
@@ -30,20 +32,34 @@ public class Terminal implements ITerminal {
 
 	@Override
 	public String terminalTare() {
-		// TODO Auto-generated method stub
-		return null;
+		String str = con.getTerminalResponse("T");
+		
+		return "Scale tared, tara reads: " + getDigit(str) + " " + getUnit(str);
 	}
 
 	@Override
 	public String terminalZero() {
-		// TODO Auto-generated method stub
-		return null;
+		con.getTerminalResponse("Z");
+		
+		return "Scale has been zeroed.";
 	}
 
 	@Override
 	public String terminalOk() {
-		// TODO Auto-generated method stub
-		return null;
+		con.getTerminalResponse("Ok");
+		
+		int i = 0;
+		
+		if (i==0){
+			i++;
+			return terminalZero();
+			
+		}
+		else{
+			return terminalTare();
+		}
+	
+	
 	}
 
 
@@ -61,4 +77,20 @@ public class Terminal implements ITerminal {
 		return null;
 	}
 
+	private String getDigit(String str) {
+		String res = "";
+		
+		Pattern p = Pattern.compile("-?[\\d+.\\d+]");
+		Matcher m = p.matcher(str);
+		
+		while(m.find()) {
+			res += m.group();
+		}
+		
+		return res;
+	}
+	
+	private String getUnit(String str) {
+		return str.substring(str.length() - 2).trim();
+	}
 }
