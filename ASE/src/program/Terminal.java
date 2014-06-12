@@ -72,16 +72,16 @@ public class Terminal implements ITerminal {
 
 	@Override
 	public String getConnection() {
-		// TODO Auto-generated method stub
-		return null;
+		return con.getHost() + ":" + con.getPort();
 	}
 
 
 
 	@Override
 	public String terminalDisplay() {
-		// TODO Auto-generated method stub
-		return null;
+		con.getTerminalResponse("DW");
+		
+		return "Weight successfully printed on scale display.";
 	}
 
 	private String getDigit(String str) {
