@@ -3,7 +3,7 @@ import program.*;
 
 public class Main {
 	public Main() {
-		GUI GUI = new program.GUI();
+		TerminalGUI GUI = new program.TerminalGUI();
 		Terminal terminal = new program.Terminal();
 	}
 }
