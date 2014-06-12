@@ -107,7 +107,7 @@ public class GuiLogin extends JComponent {
 		String pw = pass.getText();
 		try {
 			if ( != null && pass!=null) {
-		Statement stmt = connection.CreateStatement();
+		Statement stmt = Connector.CreateStatement();
 	    String sql = "SELECT * FROM users WHERE uid='" + oprNr + "' and password='" + pw + "'";
 	    ResultSet rs = stmt.executeQuery(sql);
 	    	if( rs.next()){
