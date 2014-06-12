@@ -23,8 +23,9 @@ public class Terminal implements ITerminal {
 
 	@Override
 	public String terminalRead() {
-		// TODO Auto-generated method stub
-		return null;
+		String str = con.getTerminalResponse("S");
+		
+		return "Current scale weight: " + getDigit(str) + " " + getUnit(str);
 	}
 
 	@Override
@@ -40,19 +41,22 @@ public class Terminal implements ITerminal {
 	}
 
 	@Override
-	public String terminalMessage(String msg) {
+	public String terminalOk() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
-	public String terminalDisplay() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public String getConnection() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public String terminalDisplay() {
 		// TODO Auto-generated method stub
 		return null;
 	}

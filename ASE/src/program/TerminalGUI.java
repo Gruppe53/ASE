@@ -23,10 +23,8 @@ public class TerminalGUI extends JPanel {
 		
 	// knapper
 	private JButton TerminalRead = new JButton("Read");
-	private JButton TerminalTare = new JButton("Tare");
-	private JButton TerminalZero = new JButton("Zero");
-	private JButton TerminalMessage = new JButton("Message");
-	private JButton TerminalDisplay = new JButton("Display");
+	private JButton TerminalOk = new JButton("Ok");
+
 	
 	// Udskrift
 	private JTextArea textArea = new JTextArea();
@@ -47,16 +45,14 @@ public class TerminalGUI extends JPanel {
 		cmdPanel.setBackground(Color.white);
 		
 		TerminalRead.setEnabled(false);
-		TerminalTare.setEnabled(false);
-		TerminalZero.setEnabled(false);
-		TerminalMessage.setEnabled(false);
-		TerminalDisplay.setEnabled(false);
+
+		TerminalOk.setEnabled(false);
+
 		
 		cmdPanel.add(TerminalRead);
-		cmdPanel.add(TerminalTare);
-		cmdPanel.add(TerminalZero);
-		cmdPanel.add(TerminalMessage);
-		cmdPanel.add(TerminalDisplay);
+
+		cmdPanel.add(TerminalOk);
+
 		
 		
 		// Console panel
@@ -64,7 +60,7 @@ public class TerminalGUI extends JPanel {
 		txtPanel.setBackground(Color.white);
 		txtPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.decode("#d5dfe5")), "Console"));
 		txtPanel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		txtPanel.setPreferredSize(new Dimension(400, 200));
+		txtPanel.setPreferredSize(new Dimension(400, 150));
 		
 		textArea.setLineWrap(true);
 		textArea.setWrapStyleWord(true);
@@ -84,29 +80,15 @@ public class TerminalGUI extends JPanel {
             }
         });
 		
-		TerminalTare.addActionListener(new ActionListener() {
+
+		
+		TerminalOk.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                TerminalTare();
+                TerminalOk();
             }
         });
 		
-		TerminalZero.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                TerminalZero();
-            }
-        });
-		
-		TerminalMessage.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                TerminalMessage(JOptionPane.showInputDialog("Message"));
-            }
-        });
-		
-		TerminalDisplay.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                TerminalDisplay();
-            }
-        });
+
 		
 		add(scaPanel);
 	}
@@ -125,13 +107,11 @@ public class TerminalGUI extends JPanel {
 		textArea.append("[" + getDate() + "]\t" + Terminal.terminalZero() + "\n");
 	}
 	
-	private void TerminalMessage(String msg) {
-		textArea.append("[" + getDate() + "]\t" + Terminal.terminalMessage(msg) + "\n");
+	private void TerminalOk() {
+		textArea.append("[" + getDate() + "]\t" + Terminal.terminalOk() + "\n");
 	}
 	
-	private void TerminalDisplay() {
-		textArea.append("[" + getDate() + "]\t" + Terminal.terminalDisplay() + "\n");
-	}
+	
 	
 	private String getDate() {
 		return new SimpleDateFormat("HH:mm:ss").format(new Date());
