@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.sql.*;
-
+import DBaccess.*;
 import javax.swing.*;
 
 import net.miginfocom.swing.MigLayout;
@@ -103,25 +103,31 @@ public class GuiLogin extends JComponent {
 	}
 			
 	private void userLogin() {
+		Connector cn = new Connector();
+		String databaseUsername = "";
+		String databasePassword = "";
 		String oprNr = oprId.getText();
-		
-		if(opr.tryLogin(oprNr, pass.getPassword())) {
-			tab.setEnabledAt(1, true);
-			
-			userLogout.setEnabled(true);
-			
-			userLogin.setEnabled(false);
-			oprId.setEnabled(false);
-			pass.setEnabled(false);
-			
-			try {
-				textArea.append("[" + getDate() + "] Logged in as " + opr.getOperator(oprNr) + "\n");
-			}
-			catch (DALException e) {
-				e.printStackTrace();
-			}
-		}
-	}
+		char[] pw = pass.getPassword();
+		try {
+			if (oprNr != null && pass!=null) {
+	    String sql = "SELECT * FROM users WHERE uid='" + oprNr + "' and password='" + pw + "'";
+	    ResultSet rs = cn.doQuery(sql);
+	    	while( rs.next()){
+	           databaseUsername = rs.getString("uid");
+	           databasePassword = rs.getString("Password");
+	    	}
+	    	if (oprNr.equals(databaseUsername) && pw.equals(databasePassword)){
+	    		userLogin.setEnabled(false);
+				oprId.setEnabled(false);
+				pass.setEnabled(false);
+				
+				try {
+					textArea.append("[" + getDate() + "] Logged in as " + opr.getOperator(oprNr) + "\n");
+				}
+				catch (DALException e) {
+					e.printStackTrace();
+	
+	   
 	
 	
 	private void userLogout() {
