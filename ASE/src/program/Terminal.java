@@ -73,7 +73,7 @@ public class Terminal implements ITerminal {
 
 	@Override
 	public String terminalOkProductBatch() {
-		return n;
+		return reciept();
 	}
 
 	@Override
@@ -88,6 +88,10 @@ public class Terminal implements ITerminal {
 		con.getTerminalResponse("DW");
 		
 		return "Weight successfully printed on scale display.";
+	}
+	private int reciept() {
+		int recieptNumber = 1;
+		return recieptNumber;
 	}
 
 	private String getDigit(String str) {
