@@ -1,6 +1,7 @@
 package program;
 
 import connect.ITerminalConnection;
+import DBaccess.*;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -72,7 +73,7 @@ public class Terminal implements ITerminal {
 
 	@Override
 	public String terminalOkProductBatch() {
-		return null;
+		return n;
 	}
 
 	@Override
