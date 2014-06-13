@@ -6,24 +6,24 @@ import java.net.*;
 public class TerminalConnection implements ITerminalConnection {
 	private String host;
 	private int port;
-	private Socket scaleSocket;
-	private PrintWriter scaleOutput;
-	private BufferedReader scaleInput;
+	private Socket terminalSocket;
+	private PrintWriter terminalOutput;
+	private BufferedReader terminalInput;
 	
-	public Connection() {
+	public TerminalConnection() {
 		this.host = "";
 		this.port = 0;
 	}
 	
 	@Override
-	public boolean TerminalConnect(String host, String port) {
+	public boolean terminalConnect(String host, String port) {
 		this.host = host;
 		this.port = Integer.parseInt(port);
 		
 		try {
-			if((this.scaleSocket = new Socket(this.host, this.port)) != null) {
-				this.scaleOutput = new PrintWriter(this.scaleSocket.getOutputStream(), true);
-				this.scaleInput = new BufferedReader(new InputStreamReader(this.scaleSocket.getInputStream()));
+			if((this.terminalSocket = new Socket(this.host, this.port)) != null) {
+				this.terminalOutput = new PrintWriter(this.terminalSocket.getOutputStream(), true);
+				this.terminalInput = new BufferedReader(new InputStreamReader(this.terminalSocket.getInputStream()));
 				
 				return true;
 			}
@@ -36,13 +36,13 @@ public class TerminalConnection implements ITerminalConnection {
 	}
 
 	@Override
-	public void TerminalDisconnect() {
-		if(this.scaleSocket != null) {
+	public void terminalDisconnect() {
+		if(this.terminalSocket != null) {
 			try {
-				this.scaleOutput.flush();
-				this.scaleOutput.close();
-				this.scaleInput.close();
-				this.scaleSocket.close();
+				this.terminalOutput.flush();
+				this.terminalOutput.close();
+				this.terminalInput.close();
+				this.terminalSocket.close();
 			}
 			catch (IOException e) {
 				e.printStackTrace();
@@ -51,11 +51,11 @@ public class TerminalConnection implements ITerminalConnection {
 	}
 
 	@Override
-	public String getScaleResponse(String output) {
+	public String getTerminalResponse(String output) {
 	    try {
-	    	this.scaleOutput.println(output);
+	    	this.terminalOutput.println(output);
 	    	
-	    	return this.scaleInput.readLine();
+	    	return this.terminalInput.readLine();
 		}
 	    catch(IOException e) {
 			e.printStackTrace();
