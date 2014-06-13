@@ -78,20 +78,20 @@ public class TerminalGUI extends JPanel {
 		materialBatch = new JScrollPane(textArea);
 		materialBatch.setBackground(Color.white);
 		materialBatch.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.decode("#d5dfe5")),"Råvarebatch"));
-		materialBatch.setPreferredSize(new Dimension(150,50));
+		materialBatch.setPreferredSize(new Dimension(200,50));
 		
 		recept = new JScrollPane(textArea);
 		recept.setBackground(Color.white);
-		recept.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.decode("#d5dfe5")),"Råvarebatch"));
-		recept.setPreferredSize(new Dimension(150,50));
+		recept.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.decode("#d5dfe5")),"Recept"));
+		recept.setPreferredSize(new Dimension(200,50));
 		
 		productBatch = new JLabel("Produktbatch");
 		productBatchInput = new JTextField();
 		productBatchInput.setPreferredSize(new Dimension (98,20));
 		
-		TerminalOkProductBatch.setEnabled (false);
+		TerminalOkProductBatch.setEnabled (true);
 
-		proPanel.add(productBatch);
+		proPanel.add(productBatch); 
 		proPanel.add(productBatchInput, "span 3 1");
 		proPanel.add(recept);
 		proPanel.add(materialBatch);

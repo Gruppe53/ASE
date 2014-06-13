@@ -40,7 +40,7 @@ public class OperatorDAO implements IOperatorDAO {
 
 	@Override
 	public boolean getActive() {
-		if(active != null)
+		if(active != (Integer) null)
 			return true;
 		
 		return false;
@@ -48,6 +48,6 @@ public class OperatorDAO implements IOperatorDAO {
 
 	@Override
 	public void userLogout() {
-		active = null;
+		active = (Integer) null;
 	}
 }
