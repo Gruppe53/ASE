@@ -2,6 +2,7 @@ package program;
 
 import connect.ITerminalConnection;
 
+import java.sql.ResultSet;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -14,6 +15,7 @@ public class Terminal implements ITerminal {
 	
 	private int okcount = 0;
 	private ITerminalConnection con;
+	private databaseAccess.Connector connector;
 	
 	public Terminal(ITerminalConnection con) {
 		this.con = con;
@@ -92,7 +94,12 @@ public class Terminal implements ITerminal {
 		return "Weight successfully printed on scale display.";
 	}
 	private String reciept() {
-		String recieptNumber = DBacces.recieptsql;
+		String recieptNumber = null;
+		try {
+			recieptNumber = connector.doQuery("SELECT FROM WHERE");
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
 		return recieptNumber;
 	}
 
