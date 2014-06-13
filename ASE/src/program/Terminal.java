@@ -10,8 +10,9 @@ import java.util.regex.Pattern;
 
 
 public class Terminal implements ITerminal {
-	private ITerminalConnection con;
+	
 	private int runtime = 0;
+	private ITerminalConnection con;
 	
 	public Terminal(ITerminalConnection con) {
 		this.con = con;
@@ -89,8 +90,8 @@ public class Terminal implements ITerminal {
 		
 		return "Weight successfully printed on scale display.";
 	}
-	private int reciept() {
-		int recieptNumber = 1;
+	private String reciept() {
+		String recieptNumber = DBacces.recieptsql;
 		return recieptNumber;
 	}
 
