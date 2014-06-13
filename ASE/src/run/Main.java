@@ -1,4 +1,4 @@
-package Run;
+package run;
 
 import java.awt.*;
 
@@ -6,7 +6,7 @@ import javax.swing.*;
 
 import connect.*;
 import program.*;
-import Users.*;
+import users.*;
 import net.miginfocom.swing.MigLayout;
 
 public class Main extends JPanel{

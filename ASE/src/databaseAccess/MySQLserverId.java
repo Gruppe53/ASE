@@ -1,4 +1,4 @@
-package DBaccess;
+package databaseAccess;
 
 public abstract class MySQLserverId {
 

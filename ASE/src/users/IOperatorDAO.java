@@ -1,4 +1,4 @@
-package Users;
+package users;
 
 public interface IOperatorDAO {
 	String getOperator(int id) throws DALException;

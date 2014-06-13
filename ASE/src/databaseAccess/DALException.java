@@ -1,4 +1,4 @@
-package DBaccess;
+package databaseAccess;
 
 public class DALException extends Exception
 {

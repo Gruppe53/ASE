@@ -1,4 +1,4 @@
-package Users;
+package users;
 
 public interface IOperatorDTO {
 	String getName(int id);

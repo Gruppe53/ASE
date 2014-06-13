@@ -1,4 +1,4 @@
-package Users;
+package users;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,10 +9,9 @@ import java.util.Arrays;
 import java.util.Date;
 import java.sql.*;
 
-import DBaccess.*;
-
 import javax.swing.*;
 
+import databaseAccess.*;
 import net.miginfocom.swing.MigLayout;
 
 public class GuiLogin extends JComponent {

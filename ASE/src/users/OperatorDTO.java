@@ -1,4 +1,4 @@
-package Users;
+package users;
 
 import java.util.*;
 
