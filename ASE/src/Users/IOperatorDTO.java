@@ -1,7 +1,8 @@
 package Users;
 
 public interface IOperatorDTO {
-	String getName(String opr);
-	int getOprId(String opr);
-	String getPassword(String opr);
+	String getName(int id);
+	int getOprId(int id);
+	String getPassword(int id);
+
 }
