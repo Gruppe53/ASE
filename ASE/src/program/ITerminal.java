@@ -6,8 +6,8 @@ public interface ITerminal {
 	String terminalRead();
 	String terminalTare();
 	String terminalZero();
-	String terminalOk();
-	String terminalOk2();
+	String terminalOkWeight();
+	String terminalOkProductBatch();
 	String terminalDisplay();
 	String getConnection();
 }

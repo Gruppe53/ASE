@@ -1,6 +1,6 @@
 package program;
 
-import connect.*;
+import connect.ITerminalConnection;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -53,8 +53,7 @@ public class Terminal implements ITerminal {
 	}
 
 	@Override
-	public String terminalOk() {
-		con.getTerminalResponse("Ok");
+	public String terminalOkWeight() {
 		
 		if (runtime == 3){
 			runtime = 0;
@@ -72,7 +71,7 @@ public class Terminal implements ITerminal {
 	}
 
 	@Override
-	public String terminalOk2() {
+	public String terminalOkProductBatch() {
 		return null;
 	}
 
