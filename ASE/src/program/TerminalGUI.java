@@ -24,6 +24,7 @@ public class TerminalGUI extends JPanel {
 	private JLabel productBatch;
 	private JScrollPane recept;
 	private JScrollPane materialBatch;
+	private JTextField productBatchInput;
 		
 	// knapper
 	private JButton TerminalRead = new JButton("Read");
@@ -85,10 +86,13 @@ public class TerminalGUI extends JPanel {
 		recept.setPreferredSize(new Dimension(150,50));
 		
 		productBatch = new JLabel("Produktbatch");
+		productBatchInput = new JTextField();
+		productBatchInput.setPreferredSize(new Dimension (98,20));
 		
 		TerminalOkProductBatch.setEnabled (false);
 
 		proPanel.add(productBatch);
+		proPanel.add(productBatchInput, "span 3 1");
 		proPanel.add(recept);
 		proPanel.add(materialBatch);
 		proPanel.add(TerminalOkProductBatch);
