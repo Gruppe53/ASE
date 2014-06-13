@@ -17,15 +17,18 @@ public class TerminalGUI extends JPanel {
 	Terminal Terminal = new Terminal(null); 
 	
 	private JPanel scaPanel = new JPanel(new MigLayout());
-	private JPanel conPanel = new JPanel();
+	private JPanel proPanel = new JPanel();
 	private JPanel stsPanel = new JPanel();
 	private JPanel cmdPanel = new JPanel();
 	private JScrollPane txtPanel;
+	private JLabel productBatch;
+	private JScrollPane recept;
+	private JScrollPane materialBatch;
 		
 	// knapper
 	private JButton TerminalRead = new JButton("Read");
 	private JButton TerminalOkWeight = new JButton("Ok");
-	private JButton TerminalOk2 = new JButton("Ok");
+	private JButton TerminalOkProductBatch = new JButton("Ok");
 	
 
 	// Udskrift
@@ -49,15 +52,12 @@ public class TerminalGUI extends JPanel {
 		TerminalRead.setEnabled(false);
 
 		TerminalOkWeight.setEnabled(false);
-		
-		TerminalOk2.setEnabled (false);
 
 		
 		cmdPanel.add(TerminalRead);
 
 		cmdPanel.add(TerminalOkWeight);
-		
-		cmdPanel.add(TerminalOk2);
+
 
 		
 		
@@ -74,11 +74,28 @@ public class TerminalGUI extends JPanel {
 		textArea.append("[" + getDate() + "]\tType an IP to connect.\n");
 		
 		// Produktbatch panel
+		materialBatch = new JScrollPane(textArea);
+		materialBatch.setBackground(Color.white);
+		materialBatch.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.decode("#d5dfe5")),"Råvarebatch"));
+		materialBatch.setPreferredSize(new Dimension(150,50));
 		
-		txtPanel = new JTextPane (textArea);
+		recept = new JScrollPane(textArea);
+		recept.setBackground(Color.white);
+		recept.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.decode("#d5dfe5")),"Råvarebatch"));
+		recept.setPreferredSize(new Dimension(150,50));
+		
+		productBatch = new JLabel("Produktbatch");
+		
+		TerminalOkProductBatch.setEnabled (false);
+
+		proPanel.add(productBatch);
+		proPanel.add(recept);
+		proPanel.add(materialBatch);
+		proPanel.add(TerminalOkProductBatch);
+		
 		
 		// Add to Main panel
-		scaPanel.add(conPanel);
+		scaPanel.add(proPanel);
 		scaPanel.add(stsPanel, "wrap");
 		scaPanel.add(cmdPanel, "span 2 1, wrap");
 		scaPanel.add(txtPanel, "span 2 1");
@@ -99,7 +116,7 @@ public class TerminalGUI extends JPanel {
         });
 		
 		
-		TerminalOk2.addActionListener(new ActionListener() {
+		TerminalOkProductBatch.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 TerminalOk2();
             }
@@ -123,11 +140,11 @@ public class TerminalGUI extends JPanel {
 	}
 	
 	private void TerminalOk() {
-		textArea.append("[" + getDate() + "]\t" + Terminal.terminalOk() + "\n");
+		textArea.append("[" + getDate() + "]\t" + Terminal.terminalOkWeight() + "\n");
 	}
 	
 	private void TerminalOk2() {
-		textArea.append("[" + getDate() + "]\t" + Terminal.terminalOk2() + "\n");
+		textArea.append("[" + getDate() + "]\t" + Terminal.terminalOkProductBatch() + "\n");
 	}
 	
 	private String getDate() {
