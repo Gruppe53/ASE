@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 public class Terminal implements ITerminal {
 	
-	private int runtime = 0;
+	private int okcount = 0;
 	private ITerminalConnection con;
 	
 	public Terminal(ITerminalConnection con) {
@@ -57,16 +57,16 @@ public class Terminal implements ITerminal {
 	@Override
 	public String terminalOkWeight() {
 		
-		if (runtime == 3){
-			runtime = 0;
+		if (okcount == 3){
+			okcount = 0;
 		}
 		
-		if (runtime == 0){
-			runtime++;
+		if (okcount == 0){
+			okcount++;
 			return terminalZero();
 		}
 		else {
-			runtime++;
+			okcount++;
 			return terminalTare();
 		}
 	
