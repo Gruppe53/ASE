@@ -20,12 +20,12 @@ public class ConnectGUI extends JComponent {
 	private JPanel scaPanel = new JPanel(new MigLayout());
 	private JPanel conPanel = new JPanel();
 	private JPanel stsPanel = new JPanel();
-	private JPanel cmdPanel = new JPanel();
 	private JScrollPane txtPanel;
 	
 	// Connection panel
 	private JTextField[] host = new JTextField[4];
-	private JTextField port = new JTextField();
+	
+	private JTextField port = new JTextField("8000");
 	private JLabel hostLabel = new JLabel("Host");
 	private JLabel portLabel = new JLabel("Port");
 	private JButton conButton = new JButton("Connect");
@@ -52,8 +52,11 @@ public class ConnectGUI extends JComponent {
 		stsPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.decode("#d5dfe5")), "Status"));
 		stsPanel.setBackground(Color.white);
 		
+		host[0] = new JTextField("169");
+		host[1] = new JTextField("254");
+		host[2] = new JTextField("2");
+		host[3] = new JTextField("2");
 		for(int i = 0; i < host.length; i++) {
-			host[i] = new JTextField("");
 			host[i].setPreferredSize(new Dimension(27,14));
 		}
 		
@@ -95,7 +98,6 @@ public class ConnectGUI extends JComponent {
 		// Add to Main panel
 		scaPanel.add(conPanel);
 		scaPanel.add(stsPanel, "wrap");
-		scaPanel.add(cmdPanel, "span 2 1, wrap");
 		scaPanel.add(txtPanel, "span 2 1");
 		
 		// Button events
