@@ -24,7 +24,7 @@ public class TerminalGUI extends JPanel {
 		
 	// knapper
 	private JButton TerminalRead = new JButton("Read");
-	private JButton TerminalOk = new JButton("Ok");
+	private JButton TerminalOkWeight = new JButton("Ok");
 	private JButton TerminalOk2 = new JButton("Ok");
 	
 
@@ -48,14 +48,14 @@ public class TerminalGUI extends JPanel {
 		
 		TerminalRead.setEnabled(false);
 
-		TerminalOk.setEnabled(false);
+		TerminalOkWeight.setEnabled(false);
 		
 		TerminalOk2.setEnabled (false);
 
 		
 		cmdPanel.add(TerminalRead);
 
-		cmdPanel.add(TerminalOk);
+		cmdPanel.add(TerminalOkWeight);
 		
 		cmdPanel.add(TerminalOk2);
 
@@ -73,6 +73,10 @@ public class TerminalGUI extends JPanel {
 		textArea.setEditable(false);
 		textArea.append("[" + getDate() + "]\tType an IP to connect.\n");
 		
+		// Produktbatch panel
+		
+		txtPanel = new JTextPane (textArea);
+		
 		// Add to Main panel
 		scaPanel.add(conPanel);
 		scaPanel.add(stsPanel, "wrap");
@@ -88,7 +92,7 @@ public class TerminalGUI extends JPanel {
 		
 
 		
-		TerminalOk.addActionListener(new ActionListener() {
+		TerminalOkWeight.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 TerminalOk();
             }
