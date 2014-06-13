@@ -50,7 +50,7 @@ public class GuiLogin extends JComponent {
 		ctrlPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.decode("#d5dfe5")), "Login"));
 		ctrlPanel.setBackground(Color.white);
 		
-		userName = new JLabel("Operat�r nr.:");
+		userName = new JLabel("Operatør nr.:");
 		userPass = new JLabel("Password:");
 		oprId = new JTextField(8);
 		oprId.setPreferredSize(new Dimension(98,20));
