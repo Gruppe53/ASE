@@ -19,10 +19,13 @@ public class Main extends JPanel{
 	private ITerminalConnection con;
 	private ITerminal terminal;
 	private TerminalGUI TGUI;
+	private ConnectGUI CGUI;
 	
 	private IOperator oprDTO;
 	private IOperatorDAO oprDAO;
 	private GuiLogin GLogin;
+	
+	
 	
 	public Main() {
 		setLayout(new MigLayout());
@@ -41,7 +44,7 @@ public class Main extends JPanel{
 		oprDAO = new OperatorDAO(oprDTO);
 		GLogin = new GuiLogin(oprDAO, tab);
 		
-		tab.addTab("Connect", connect);
+		tab.addTab("Connect", CGUI);
 		tab.addTab("Log in", GLogin);
 		tab.addTab("Scale", TGUI);
 		
