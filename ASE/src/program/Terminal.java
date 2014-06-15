@@ -77,7 +77,7 @@ public class Terminal implements ITerminal {
 
 	@Override
 	public String terminalOkProductBatch() {
-		return reciept();
+		return getReciept();
 	}
 
 	@Override
@@ -93,10 +93,10 @@ public class Terminal implements ITerminal {
 		
 		return "Weight successfully printed on scale display.";
 	}
-	private String reciept() {
+	private String getReciept() {
 		String recieptNumber = null;
 		try {
-			recieptNumber = connector.doQuery("SELECT FROM WHERE");
+			recieptNumber = connector.doQuery("SELECT" + " FROM" + " WHERE");
 		} catch (DALException e) {
 			e.printStackTrace();
 		}
