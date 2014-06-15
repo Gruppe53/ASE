@@ -88,10 +88,15 @@ public class Terminal implements ITerminal {
 
 
 	@Override
+	public String terminalMessage(String msg) {
+	con.getTerminalResponse("D " + msg);
+		return "msg";
+	}
+	@Override
 	public String terminalDisplay() {
 		con.getTerminalResponse("DW");
 		
-		return "Weight successfully printed on scale display.";
+		return "Weight is now displayed on scale";
 	}
 	private String getReciept() {
 		String recieptNumber = null;
