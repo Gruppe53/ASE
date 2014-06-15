@@ -99,13 +99,17 @@ public class Terminal implements ITerminal {
 		return "Weight is now displayed on scale";
 	}
 	private String getReciept() {
-		String recieptNumber = null;
+		ResultSet recieptNumber;
+		String reciept;
 		try {
-			recieptNumber = connector.doQuery("SELECT" + " FROM" + " WHERE");
+			recieptNumber = connector.doQuery("SELECT");
+			while(recieptNumber.next()) {
+				reciept = recieptNumber.getString("SELECT");
+			}
 		} catch (DALException e) {
 			e.printStackTrace();
 		}
-		return recieptNumber;
+		return reciept;
 	}
 
 	private String getDigit(String str) {
