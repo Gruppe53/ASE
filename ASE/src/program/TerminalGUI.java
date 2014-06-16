@@ -152,10 +152,12 @@ public class TerminalGUI extends JPanel {
 	}
 	
 	private void TerminalOkProductBatch(String productBatchNumber) {
+		if(terminal.terminalOkProductBatch(productBatchNumber)!=null){	
 		textAreaConsole.append("[" + getDate() + "]\t" + terminal.terminalOkProductBatch(productBatchNumber) + "\n");
 		textAreaPrescription.append(terminal.terminalOkProductBatch(productBatchNumber));
+		TerminalRead.setEnabled(true);
+		}
 	}
-	
 	private String getDate() {
 		return new SimpleDateFormat("HH:mm:ss").format(new Date());
 	}
