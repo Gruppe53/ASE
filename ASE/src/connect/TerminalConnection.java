@@ -7,9 +7,9 @@ import program.*;
 public class TerminalConnection implements ITerminalConnection {
 	private String host;
 	private int port;
-	private Socket scaleSocket;
-	private PrintWriter scaleOutput;
-	private BufferedReader scaleInput;
+	private Socket terminaleSocket;
+	private PrintWriter terminalOutput;
+	private BufferedReader terminalInput;
 	
 	public TerminalConnection() {
 		this.host = "";
@@ -22,9 +22,9 @@ public class TerminalConnection implements ITerminalConnection {
 		this.port = Integer.parseInt(port);
 		
 		try {
-			if((this.scaleSocket = new Socket(this.host, this.port)) != null) {
-				this.scaleOutput = new PrintWriter(this.scaleSocket.getOutputStream(), true);
-				this.scaleInput = new BufferedReader(new InputStreamReader(this.scaleSocket.getInputStream()));
+			if((this.terminaleSocket = new Socket(this.host, this.port)) != null) {
+				this.terminalOutput = new PrintWriter(this.terminaleSocket.getOutputStream(), true);
+				this.terminalInput = new BufferedReader(new InputStreamReader(this.terminaleSocket.getInputStream()));
 				
 				return true;
 			}
@@ -38,12 +38,12 @@ public class TerminalConnection implements ITerminalConnection {
 
 	@Override
 	public void terminalDisconnect() {
-		if(this.scaleSocket != null) {
+		if(this.terminaleSocket != null) {
 			try {
-				this.scaleOutput.flush();
-				this.scaleOutput.close();
-				this.scaleInput.close();
-				this.scaleSocket.close();
+				this.terminalOutput.flush();
+				this.terminalOutput.close();
+				this.terminalInput.close();
+				this.terminaleSocket.close();
 			}
 			catch (IOException e) {
 				e.printStackTrace();
@@ -54,9 +54,9 @@ public class TerminalConnection implements ITerminalConnection {
 	@Override
 	public String getTerminalResponse(String output) {
 	    try {
-	    	this.scaleOutput.println(output);
+	    	this.terminalOutput.println(output);
 	    	
-	    	return this.scaleInput.readLine();
+	    	return this.terminalInput.readLine();
 		}
 	    catch(IOException e) {
 			e.printStackTrace();

@@ -52,10 +52,10 @@ public class ConnectGUI extends JComponent {
 		stsPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.decode("#d5dfe5")), "Status"));
 		stsPanel.setBackground(Color.white);
 		
-		host[0] = new JTextField("123");
-		host[1] = new JTextField("123");
-		host[2] = new JTextField("123");
-		host[3] = new JTextField("123");
+		host[0] = new JTextField("169");
+		host[1] = new JTextField("254");
+		host[2] = new JTextField("2");
+		host[3] = new JTextField("3");
 		for(int i = 0; i < host.length; i++) {
 			host[i].setPreferredSize(new Dimension(27,14));
 		}
