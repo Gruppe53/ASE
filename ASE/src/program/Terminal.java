@@ -117,7 +117,7 @@ public class Terminal implements ITerminal {
 		}
 		return prescription;
 	}
-	//private String getMaterial(String str); // hvor ligger metoden? han er ikke færdig med den
+	//private String getMaterial(String +0);
 	private String getDigit(String str) { //du kan s
 		String res = "";
 		

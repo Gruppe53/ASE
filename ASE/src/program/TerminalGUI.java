@@ -21,6 +21,12 @@ public class TerminalGUI extends JPanel {
 	private JPanel proPanel = new JPanel();
 	private JPanel stsPanel = new JPanel();
 	private JPanel cmdPanel = new JPanel();
+	private JPanel matPanel = new JPanel();
+	private JPanel repPanel = new JPanel();
+	private JPanel okpPanel = new JPanel();
+	private JPanel leftPanel = new JPanel();
+	private JPanel productPanel = new JPanel();
+			
 	private JScrollPane txtPanel;
 	private JLabel productBatch;
 	private JScrollPane recept;
@@ -76,29 +82,47 @@ public class TerminalGUI extends JPanel {
 		textAreaConsole.setWrapStyleWord(true);
 		textAreaConsole.setEditable(false);
 		
-		// Produktbatch panel
-		materialBatch = new JScrollPane(textAreaMaterialBatch);
-		materialBatch.setBackground(Color.white);
-		materialBatch.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.decode("#d5dfe5")),"Råvarebatch"));
-		materialBatch.setPreferredSize(new Dimension(200,50));
+		// Productbatch panel
+		proPanel.add(leftPanel);
+		proPanel.add(okpPanel);
+		
+		// The small panels in productbatch panel
+		leftPanel.setAlignmentX(LEFT_ALIGNMENT);
+		
+		leftPanel.add(productPanel);
+		leftPanel.add(repPanel);
+		leftPanel.add(matPanel);
+
+		okpPanel.setAlignmentX(RIGHT_ALIGNMENT);
+		
+		okpPanel.add(TerminalOkProductBatch);
+		TerminalOkProductBatch.setEnabled (true);
+		
+		productBatch = new JLabel("Produktbatch");
+		productBatchInput = new JTextField();
+		productBatchInput.setPreferredSize(new Dimension (98,20));
+		
+		
+		productPanel.add(productBatch);
+		productPanel.add(productBatchInput);
+		productPanel.setAlignmentX(LEFT_ALIGNMENT);
 		
 		recept = new JScrollPane(textAreaPrescription);
 		recept.setBackground(Color.white);
 		recept.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.decode("#d5dfe5")),"Recept"));
 		recept.setPreferredSize(new Dimension(200,50));
 		
-		productBatch = new JLabel("Produktbatch");
-		productBatchInput = new JTextField();
-		productBatchInput.setPreferredSize(new Dimension (98,20));
+		repPanel.add(recept);
+		repPanel.setAlignmentX(LEFT_ALIGNMENT);
 		
-		TerminalOkProductBatch.setEnabled (true);
+		materialBatch = new JScrollPane(textAreaMaterialBatch);
+		materialBatch.setBackground(Color.white);
+		materialBatch.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.decode("#d5dfe5")),"Råvarebatch"));
+		materialBatch.setPreferredSize(new Dimension(200,50));
+		
+		matPanel.add(materialBatch);
+		matPanel.setAlignmentX(LEFT_ALIGNMENT);
 
-		proPanel.add(productBatch); 
-		proPanel.add(productBatchInput, "span 3 1");
-		proPanel.add(recept);
-		proPanel.add(materialBatch);
-		proPanel.add(TerminalOkProductBatch);
-		
 		
 		// Add to Main panel
 		scaPanel.add(proPanel);
