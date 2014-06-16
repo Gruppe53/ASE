@@ -196,8 +196,7 @@ public class Terminal implements ITerminal {
 		return tolerancedouble;
 	}
 
-	//private String getMaterial(String +0);
-	private String getDigit(String str) {
+		private String getDigit(String str) {
 		String res = "";
 		
 		Pattern p = Pattern.compile("-?[\\d+.\\d+]");
