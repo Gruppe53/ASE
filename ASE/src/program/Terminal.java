@@ -121,11 +121,11 @@ public class Terminal implements ITerminal {
 	private String getMaterialId(String productBatchNumber){
 		String prescriptionId = getPrescription(productBatchNumber);
 		ResultSet materialIdResultSet;
-		String materialIdString = null;
+		String materialId = null;
 		try{
 			materialIdResultSet = Connector.doQuery("SELECT m_id FROM precomponent WHERE pre_id = '" + prescriptionId + "'");
 			if(materialIdResultSet.next()){
-				materialIdString = materialIdResultSet.getString("m_id");
+				materialId = materialIdResultSet.getString("m_id");
 			}
 		}
 		catch (DALException e) {
@@ -134,7 +134,26 @@ public class Terminal implements ITerminal {
 		catch (SQLException f) {
 			f.printStackTrace();
 		}
-		return materialIdString;
+		return materialId;
+	}
+	
+	private String getMaterialName(String productBatchNumber){
+		String materialId = getMaterialId(productBatchNumber);
+		ResultSet materialNameResultSet;
+		String materialName = null;
+		try{
+			materialNameResultSet = Connector.doQuery("SELECT m_name FROM materials WHERE m_id = '" + materialId + "'");
+			if(materialNameResultSet.next()){
+				materialName = materialNameResultSet.getString("m_name");
+			}
+		}
+		catch (DALException e) {
+			e.printStackTrace();
+		}
+		catch (SQLException f) {
+			f.printStackTrace();
+		}
+		return materialName;
 	}
 	
 	private double getNetto(String productBatchNumber){
