@@ -135,6 +135,9 @@ public class TerminalGUI extends JPanel {
 		TerminalRead.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 TerminalRead();
+            if(TerminalRead){
+            	
+            }
             }
         });
 		
@@ -142,7 +145,7 @@ public class TerminalGUI extends JPanel {
 		
 		TerminalOkWeight.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                TerminalOk();
+                TerminalOkWeight();
             }
         });
 		
@@ -173,7 +176,7 @@ public class TerminalGUI extends JPanel {
 		textAreaConsole.append("[" + getDate() + "]\t" + terminal.terminalZero() + "\n");
 	}
 	
-	private void TerminalOk() {
+	private void TerminalOkWeight() {
 		textAreaConsole.append("[" + getDate() + "]\t" + terminal.terminalOkWeight() + "\n");
 	}
 	
