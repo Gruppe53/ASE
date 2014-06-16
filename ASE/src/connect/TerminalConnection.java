@@ -2,13 +2,14 @@ package connect;
 
 import java.io.*;
 import java.net.*;
+import program.*;
 
 public class TerminalConnection implements ITerminalConnection {
 	private String host;
 	private int port;
-	private Socket terminalSocket;
-	private PrintWriter terminalOutput;
-	private BufferedReader terminalInput;
+	private Socket scaleSocket;
+	private PrintWriter scaleOutput;
+	private BufferedReader scaleInput;
 	
 	public TerminalConnection() {
 		this.host = "";
@@ -21,9 +22,9 @@ public class TerminalConnection implements ITerminalConnection {
 		this.port = Integer.parseInt(port);
 		
 		try {
-			if((this.terminalSocket = new Socket(this.host, this.port)) != null) {
-				this.terminalOutput = new PrintWriter(this.terminalSocket.getOutputStream(), true);
-				this.terminalInput = new BufferedReader(new InputStreamReader(this.terminalSocket.getInputStream()));
+			if((this.scaleSocket = new Socket(this.host, this.port)) != null) {
+				this.scaleOutput = new PrintWriter(this.scaleSocket.getOutputStream(), true);
+				this.scaleInput = new BufferedReader(new InputStreamReader(this.scaleSocket.getInputStream()));
 				
 				return true;
 			}
@@ -37,12 +38,12 @@ public class TerminalConnection implements ITerminalConnection {
 
 	@Override
 	public void terminalDisconnect() {
-		if(this.terminalSocket != null) {
+		if(this.scaleSocket != null) {
 			try {
-				this.terminalOutput.flush();
-				this.terminalOutput.close();
-				this.terminalInput.close();
-				this.terminalSocket.close();
+				this.scaleOutput.flush();
+				this.scaleOutput.close();
+				this.scaleInput.close();
+				this.scaleSocket.close();
 			}
 			catch (IOException e) {
 				e.printStackTrace();
@@ -53,9 +54,9 @@ public class TerminalConnection implements ITerminalConnection {
 	@Override
 	public String getTerminalResponse(String output) {
 	    try {
-	    	this.terminalOutput.println(output);
+	    	this.scaleOutput.println(output);
 	    	
-	    	return this.terminalInput.readLine();
+	    	return this.scaleInput.readLine();
 		}
 	    catch(IOException e) {
 			e.printStackTrace();

@@ -4,17 +4,16 @@ import java.awt.*;
 import java.awt.event.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import program.ITerminal;
+import program.*;
 import javax.swing.*;
 
 import net.miginfocom.swing.MigLayout;
 
 public class ConnectGUI extends JComponent {
 	private static final long serialVersionUID = 1L;
-	private static JFrame scaleFrame;
-	private static JComponent newContentPane;
+	
 	// General
-	private ITerminal Terminal;
+	private ITerminal terminal;
 	
 	// Main panels
 	private JPanel scaPanel = new JPanel(new MigLayout());
@@ -24,17 +23,18 @@ public class ConnectGUI extends JComponent {
 	
 	// Connection panel
 	private JTextField[] host = new JTextField[4];
-	
-	private JTextField port = new JTextField("8080");
+	private JTextField port = new JTextField("8000");
 	private JLabel hostLabel = new JLabel("Host");
 	private JLabel portLabel = new JLabel("Port");
 	private JButton conButton = new JButton("Connect");
 	private JButton disButton = new JButton("Disconnect");
 	
+	
 	// Text panel (Console)
 	private JTextArea textArea = new JTextArea();
 
-	public ConnectGUI() {
+	public ConnectGUI(ITerminal terminal) {
+		this.terminal = terminal;
 		
 		// General setup
 		setLayout(new MigLayout());
@@ -52,10 +52,10 @@ public class ConnectGUI extends JComponent {
 		stsPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.decode("#d5dfe5")), "Status"));
 		stsPanel.setBackground(Color.white);
 		
-		host[0] = new JTextField("169");
-		host[1] = new JTextField("254");
-		host[2] = new JTextField("2");
-		host[3] = new JTextField("3");
+		host[0] = new JTextField("123");
+		host[1] = new JTextField("123");
+		host[2] = new JTextField("123");
+		host[3] = new JTextField("123");
 		for(int i = 0; i < host.length; i++) {
 			host[i].setPreferredSize(new Dimension(27,14));
 		}
@@ -81,7 +81,7 @@ public class ConnectGUI extends JComponent {
 		conPanel.add(conButton, "wrap");
 		conPanel.add(portLabel);
 		conPanel.add(port, "span 7 1");
-		conPanel.add(disButton, "wrap");
+		conPanel.add(disButton, "wrap");		
 		
 		// Console panel
 		txtPanel = new JScrollPane(textArea);
@@ -103,13 +103,13 @@ public class ConnectGUI extends JComponent {
 		// Button events
 		conButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TerminalConnect();
+				terminalConnect();
 			}
 		});
 		
 		disButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TerminalDisconnect();
+				terminalDisconnect();
 			}
 		});
 		
@@ -117,8 +117,8 @@ public class ConnectGUI extends JComponent {
 		add(scaPanel);
 	}
 	
-	private void TerminalConnect() {
-		String response = Terminal.terminalConnect(host[0].getText() + "." + host[1].getText() + "." + host[2].getText() + "." + host[3].getText(), port.getText());
+	private void terminalConnect() {
+		String response = terminal.terminalConnect(host[0].getText() + "." + host[1].getText() + "." + host[2].getText() + "." + host[3].getText(), port.getText());
 		String compare = "Could not connect";
 		
 		if(!response.equals(compare)) {
@@ -126,10 +126,6 @@ public class ConnectGUI extends JComponent {
 			
 			conButton.setEnabled(false);
 			disButton.setEnabled(true);
-			
-			//enable scale fane
-			//login.setEnabled(true);
-
 			
 			for(JTextField field : host)
 				field.setEnabled(false);
@@ -140,14 +136,11 @@ public class ConnectGUI extends JComponent {
 			textArea.append("[" + getDate() + "]\t" + compare + "\n");
 	}
 	
-	private void TerminalDisconnect() {
-		textArea.append("[" + getDate() + "]\tDisconnected from " + Terminal.terminalDisconnect() + "\n");
+	private void terminalDisconnect() {
+		textArea.append("[" + getDate() + "]\tDisconnected from " + terminal.terminalDisconnect() + "\n");
 		
 		conButton.setEnabled(true);
 		disButton.setEnabled(false);
-		
-		// disable scale fane
-		//login.setEnabled(false);
 		
 		for(JTextField field : host)
 			field.setEnabled(true);
@@ -155,35 +148,7 @@ public class ConnectGUI extends JComponent {
 		port.setEnabled(true);
 	}
 	
-	
-	
 	private String getDate() {
 		return new SimpleDateFormat("HH:mm:ss").format(new Date());
 	}
-
-	private static void createAndShowGUI(String name) {
-        // Create window
-		scaleFrame = new JFrame(name);
-		scaleFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		scaleFrame.setBackground(Color.decode("#f0f0f0"));
-		scaleFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("materials/icon.png"));
-		scaleFrame.setResizable(false);
-
-        // Create the content pane
-        newContentPane = new ConnectGUI();
-        newContentPane.setOpaque(true);
-        scaleFrame.setContentPane(newContentPane);
-
-        // Draw the window
-        scaleFrame.setLocationRelativeTo(null);
-        scaleFrame.pack();
-        scaleFrame.setVisible(true);
-    }
-	 public static void main(String[] args) {
-	        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-	            public void run() {
-	                createAndShowGUI("Scale Console"); // Name of window
-	            }
-	        });
-	    }
 }
