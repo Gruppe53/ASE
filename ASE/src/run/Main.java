@@ -21,7 +21,7 @@ public class Main extends JPanel{
 	private TerminalGUI TGUI;
 	private ConnectGUI CGUI;
 	
-//	private IOperator oprDTO;
+	private IOperatorDTO oprDTO;
 	private IOperatorDAO oprDAO;
 	private GuiLogin GLogin;
 	
@@ -40,8 +40,8 @@ public class Main extends JPanel{
 		terminal = new Terminal(con);
 		TGUI = new TerminalGUI(terminal);
 		
-	//	oprDTO = new OperatorDTO();
-	//	oprDAO = new OperatorDAO(oprDTO);
+		oprDTO = new OperatorDTO();
+		oprDAO = new OperatorDAO(oprDTO);
 		GLogin = new GuiLogin(oprDAO, tab);
 		
 		tab.addTab("Connect", CGUI);

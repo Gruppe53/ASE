@@ -85,15 +85,18 @@ public class TerminalGUI extends JPanel {
 		// Productbatch panel
 		proPanel.add(leftPanel);
 		proPanel.add(okpPanel);
+		proPanel.setBackground(Color.white);
 		
 		// The small panels in productbatch panel
-		leftPanel.setAlignmentX(LEFT_ALIGNMENT);
+		leftPanel.setPreferredSize(new Dimension (200,175));
+		leftPanel.setBackground(Color.white);
 		
 		leftPanel.add(productPanel);
 		leftPanel.add(repPanel);
 		leftPanel.add(matPanel);
 
-		okpPanel.setAlignmentX(RIGHT_ALIGNMENT);
+		okpPanel.setPreferredSize(new Dimension (100,175));
+		okpPanel.setBackground(Color.white);
 		
 		okpPanel.add(TerminalOkProductBatch);
 		TerminalOkProductBatch.setEnabled (true);
@@ -105,7 +108,7 @@ public class TerminalGUI extends JPanel {
 		
 		productPanel.add(productBatch);
 		productPanel.add(productBatchInput);
-		productPanel.setAlignmentX(LEFT_ALIGNMENT);
+		productPanel.setBackground(Color.white);
 		
 		recept = new JScrollPane(textAreaPrescription);
 		recept.setBackground(Color.white);
@@ -113,7 +116,7 @@ public class TerminalGUI extends JPanel {
 		recept.setPreferredSize(new Dimension(200,50));
 		
 		repPanel.add(recept);
-		repPanel.setAlignmentX(LEFT_ALIGNMENT);
+		repPanel.setBackground(Color.white);
 		
 		materialBatch = new JScrollPane(textAreaMaterialBatch);
 		materialBatch.setBackground(Color.white);
@@ -121,8 +124,7 @@ public class TerminalGUI extends JPanel {
 		materialBatch.setPreferredSize(new Dimension(200,50));
 		
 		matPanel.add(materialBatch);
-		matPanel.setAlignmentX(LEFT_ALIGNMENT);
-
+		matPanel.setBackground(Color.white);
 		
 		// Add to Main panel
 		scaPanel.add(proPanel);
