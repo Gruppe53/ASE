@@ -125,7 +125,7 @@ public class Terminal implements ITerminal {
 		try{
 			materialIdResultSet = Connector.doQuery("SELECT m_id FROM precomponent WHERE pre_id = '" + prescriptionId + "'");
 			if(materialIdResultSet.next()){
-			materialIdString = materialIdResultSet.getString("m_id");
+				materialIdString = materialIdResultSet.getString("m_id");
 			}
 		}
 		catch (DALException e) {
@@ -137,9 +137,46 @@ public class Terminal implements ITerminal {
 		return materialIdString;
 	}
 	
-	private double getNetto(String materialIdString, String prescription){
-		return 0;
+	private double getNetto(String productBatchNumber){
+		String materialId = getMaterialId(productBatchNumber);
+		String prescriptionId = getPrescription(productBatchNumber);
+		ResultSet nettoResultSet;
+		double nettoDouble = 0;
+		try{
+			nettoResultSet = Connector.doQuery("SELECT netto FROM precomponent WHERE pre_id = '" + prescriptionId + "' AND m_id = '" + materialId + "'");
+			if(nettoResultSet.next()){
+				nettoDouble = nettoResultSet.getDouble("netto");
+			}
+		}
+		catch (DALException e) {
+			e.printStackTrace();
+		}
+		catch (SQLException f) {
+			f.printStackTrace();
+		}
+		return nettoDouble;
 	}
+
+	private double getTolerance(String productBatchNumber){
+		String materialId = getMaterialId(productBatchNumber);
+		String prescriptionId = getPrescription(productBatchNumber);
+		ResultSet toleranceResultSet;
+		double tolerancedouble = 0;
+		try{
+			toleranceResultSet = Connector.doQuery("SELECT tolerance FROM precomponent WHERE pre_id = '" + prescriptionId + "' AND m_id = '" + materialId + "'");
+			if(toleranceResultSet.next()){
+				tolerancedouble = toleranceResultSet.getDouble("tolerance");
+			}
+		}
+		catch (DALException e) {
+			e.printStackTrace();
+		}
+		catch (SQLException f) {
+			f.printStackTrace();
+		}
+		return tolerancedouble;
+	}
+
 	//private String getMaterial(String +0);
 	private String getDigit(String str) {
 		String res = "";
