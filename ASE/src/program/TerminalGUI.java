@@ -11,10 +11,11 @@ import net.miginfocom.swing.MigLayout;
 
 
 public class TerminalGUI extends JPanel {
-	private static final long serialVersionUTD = 1L;
-	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private ITerminal terminal;
-	Terminal Terminal = new Terminal(null); 
 	
 	private JPanel scaPanel = new JPanel(new MigLayout());
 	private JPanel proPanel = new JPanel();
@@ -26,14 +27,16 @@ public class TerminalGUI extends JPanel {
 	private JScrollPane materialBatch;
 	private JTextField productBatchInput;
 		
-	// knapper
+	// Buttons
 	private JButton TerminalRead = new JButton("Read");
 	private JButton TerminalOkWeight = new JButton("Ok");
 	private JButton TerminalOkProductBatch = new JButton("Ok");
 	
 
-	// Udskrift
-	private JTextArea textArea = new JTextArea();
+	// Printout
+	private JTextArea textAreaConsole = new JTextArea();
+	private JTextArea textAreaMaterialBatch = new JTextArea();
+	private JTextArea textAreaPrescription = new JTextArea();
 
 	public TerminalGUI(ITerminal Terminal) {
 		this.terminal = Terminal;
@@ -45,7 +48,7 @@ public class TerminalGUI extends JPanel {
 		scaPanel.setBackground(Color.WHITE);
 		
 		
-		// Button panel
+		// Scale command buttons
 		cmdPanel.setPreferredSize(new Dimension(400, 60));
 		cmdPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.decode("#d5dfe5")), "Terminal commands"));
 		cmdPanel.setBackground(Color.white);
@@ -63,24 +66,23 @@ public class TerminalGUI extends JPanel {
 		
 		
 		// Console panel
-		txtPanel = new JScrollPane(textArea);
+		txtPanel = new JScrollPane(textAreaConsole);
 		txtPanel.setBackground(Color.white);
 		txtPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.decode("#d5dfe5")), "Console"));
 		txtPanel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		txtPanel.setPreferredSize(new Dimension(400, 150));
 		
-		textArea.setLineWrap(true);
-		textArea.setWrapStyleWord(true);
-		textArea.setEditable(false);
-		textArea.append("[" + getDate() + "]\tType an IP to connect.\n");
+		textAreaConsole.setLineWrap(true);
+		textAreaConsole.setWrapStyleWord(true);
+		textAreaConsole.setEditable(false);
 		
 		// Produktbatch panel
-		materialBatch = new JScrollPane(textArea);
+		materialBatch = new JScrollPane(textAreaMaterialBatch);
 		materialBatch.setBackground(Color.white);
 		materialBatch.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.decode("#d5dfe5")),"Råvarebatch"));
 		materialBatch.setPreferredSize(new Dimension(200,50));
 		
-		recept = new JScrollPane(textArea);
+		recept = new JScrollPane(textAreaPrescription);
 		recept.setBackground(Color.white);
 		recept.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.decode("#d5dfe5")),"Recept"));
 		recept.setPreferredSize(new Dimension(200,50));
@@ -104,7 +106,6 @@ public class TerminalGUI extends JPanel {
 		scaPanel.add(cmdPanel, "span 2 1, wrap");
 		scaPanel.add(txtPanel, "span 2 1");
 		
-		
 		TerminalRead.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 TerminalRead();
@@ -122,7 +123,10 @@ public class TerminalGUI extends JPanel {
 		
 		TerminalOkProductBatch.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                TerminalOk2();
+            	// Get text from JTextField
+        		String productBatchNumber = productBatchInput.getText();
+        		//returns Prescription
+                TerminalOkProductBatch(productBatchNumber);
             }
         });
 		
@@ -132,23 +136,24 @@ public class TerminalGUI extends JPanel {
 
 	
 	private void TerminalRead() {
-		textArea.append("[" + getDate() + "]\t" + Terminal.terminalRead() + "\n");
+		textAreaConsole.append("[" + getDate() + "]\t" + terminal.terminalRead() + "\n");
 	}
 	
 	private void TerminalTare() {
-		textArea.append("[" + getDate() + "]\t" + Terminal.terminalTare() + "\n");
+		textAreaConsole.append("[" + getDate() + "]\t" + terminal.terminalTare() + "\n");
 	}
 	
 	private void TerminalZero() {
-		textArea.append("[" + getDate() + "]\t" + Terminal.terminalZero() + "\n");
+		textAreaConsole.append("[" + getDate() + "]\t" + terminal.terminalZero() + "\n");
 	}
 	
 	private void TerminalOk() {
-		textArea.append("[" + getDate() + "]\t" + Terminal.terminalOkWeight() + "\n");
+		textAreaConsole.append("[" + getDate() + "]\t" + terminal.terminalOkWeight() + "\n");
 	}
 	
-	private void TerminalOk2() {
-		textArea.append("[" + getDate() + "]\t" + Terminal.terminalOkProductBatch() + "\n");
+	private void TerminalOkProductBatch(String productBatchNumber) {
+		textAreaConsole.append("[" + getDate() + "]\t" + terminal.terminalOkProductBatch(productBatchNumber) + "\n");
+		textAreaPrescription.append(terminal.terminalOkProductBatch(productBatchNumber));
 	}
 	
 	private String getDate() {
