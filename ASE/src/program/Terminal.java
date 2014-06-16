@@ -101,12 +101,12 @@ public class Terminal implements ITerminal {
 		ResultSet prescriptionNumber;
 		String prescription = null;
 		try {
-			prescriptionNumber = Connector.doQuery("SELECT pre_id FROM productbatch WHERE pb_id= '" + productBatchNumber + "'");
+			prescriptionNumber = Connector.doQuery("SELECT pre_id FROM productbatch WHERE pb_id = '" + productBatchNumber + "'");
 			if(prescriptionNumber.next()) {
 				prescription = prescriptionNumber.getString("pre_id");
 			}
 			else{
-				return prescription;
+				return prescription = null;
 			}
 		} 
 		catch (DALException e) {
@@ -117,8 +117,31 @@ public class Terminal implements ITerminal {
 		}
 		return prescription;
 	}
+	
+	private String getMaterialId(String productBatchNumber){
+		String prescriptionId = getPrescription(productBatchNumber);
+		ResultSet materialIdResultSet;
+		String materialIdString = null;
+		try{
+			materialIdResultSet = Connector.doQuery("SELECT m_id FROM precomponent WHERE pre_id = '" + prescriptionId + "'");
+			if(materialIdResultSet.next()){
+			materialIdString = materialIdResultSet.getString("m_id");
+			}
+		}
+		catch (DALException e) {
+			e.printStackTrace();
+		}
+		catch (SQLException f) {
+			f.printStackTrace();
+		}
+		return materialIdString;
+	}
+	
+	private double getNetto(String materialIdString, String prescription){
+		return 0;
+	}
 	//private String getMaterial(String +0);
-	private String getDigit(String str) { //du kan s
+	private String getDigit(String str) {
 		String res = "";
 		
 		Pattern p = Pattern.compile("-?[\\d+.\\d+]");
