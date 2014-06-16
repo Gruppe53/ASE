@@ -3,7 +3,7 @@ package program;
 import connect.ITerminalConnection;
 
 import java.sql.ResultSet;
-import java.util.*;
+import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,7 +15,6 @@ public class Terminal implements ITerminal {
 	
 	private int okcount = 0;
 	private ITerminalConnection con;
-	private databaseAccess.Connector connector;
 	
 	public Terminal(ITerminalConnection con) {
 		this.con = con;
@@ -76,10 +75,10 @@ public class Terminal implements ITerminal {
 	}
 
 	@Override
-	public String terminalOkProductBatch() {
-		return getReciept();
+	public String terminalOkProductBatch(String productBatchNumber) {
+		return getPrescription(productBatchNumber);
 	}
-
+	
 	@Override
 	public String getConnection() {
 		return con.getHost() + ":" + con.getPort();
@@ -98,18 +97,25 @@ public class Terminal implements ITerminal {
 		
 		return "Weight is now displayed on scale";
 	}
-	private String getReciept() {
-		ResultSet recieptNumber;
-		String reciept;
+	private String getPrescription(String productBatchNumber) {
+		ResultSet prescriptionNumber;
+		String prescription = null;
 		try {
-			recieptNumber = connector.doQuery("SELECT");
-			while(recieptNumber.next()) {
-				reciept = recieptNumber.getString("SELECT");
+			prescriptionNumber = Connector.doQuery("SELECT pre_id FROM productbatch WHERE pb_id= '" + productBatchNumber + "'");
+			if(prescriptionNumber.next()) {
+				prescription = prescriptionNumber.getString("pre_id");
 			}
-		} catch (DALException e) {
-			e.printStackTrace();
+			else{
+				return prescription;
+			}
+		} 
+		catch (DALException e) {
+			e.printStackTrace();			
 		}
-		return reciept;
+		catch (SQLException f) {
+			f.printStackTrace();
+		}
+		return prescription;
 	}
 
 	private String getDigit(String str) {

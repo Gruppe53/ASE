@@ -8,7 +8,7 @@ public interface ITerminal {
 	String terminalZero();
 	String terminalMessage(String msg);
 	String terminalOkWeight();
-	String terminalOkProductBatch();
+	String terminalOkProductBatch(String productBatchNumber);
 	String terminalDisplay();
 	String getConnection();
 }
