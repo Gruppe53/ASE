@@ -49,7 +49,7 @@ public class GuiLogin extends JComponent {
 		ctrlPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.decode("#d5dfe5")), "Login"));
 		ctrlPanel.setBackground(Color.white);
 		
-		userName = new JLabel("Operatør nr.:");
+		userName = new JLabel("Operateor nr.:");
 		userPass = new JLabel("Password:");
 		oprId = new JTextField(8);
 		oprId.setPreferredSize(new Dimension(98,20));
@@ -119,20 +119,28 @@ public class GuiLogin extends JComponent {
 			
 	private void userLogin() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		Connector cn = new Connector();
-		String databaseUsername = "";
+		int databaseUsername = -1;
 		String databasePassword = "";
-		String oprNr = oprId.getText();
+		
+		int oprNr;
+		
+		try {
+			oprNr = Integer.parseInt(oprId.getText());
+		} catch(Exception e) {
+			oprNr = -1;
+		}
+		
 		char[] pw = pass.getPassword();
 		try {
-			if (oprNr != null && pass!=null) {
+			if (oprNr != -1 && pass!=null) {
 				String sql = "SELECT * FROM users WHERE uid='" + oprNr + "' and password='" + pw + "'";
 				ResultSet rs = cn.doQuery(sql);
 	    
 		    	while( rs.next()) {
-		           databaseUsername = rs.getString("uid");
+		           databaseUsername = rs.getInt("uid");
 		           databasePassword = rs.getString("Password");
 		    	}
-		    	if (oprNr.equals(databaseUsername) && pw.equals(databasePassword)) {
+		    	if (oprNr == databaseUsername && pw.equals(databasePassword)) {
 		    		userLogin.setEnabled(false);
 					oprId.setEnabled(false);
 					pass.setEnabled(false);
@@ -172,25 +180,4 @@ public class GuiLogin extends JComponent {
 	private String getDate() {
 		return new SimpleDateFormat("HH:mm:ss").format(new Date());
 	}
-	
-	/*String pw = pass.getText();
-		try {
-			if ( != null && pass!=null) {
-		Statement stmt = Connector.CreateStatement();
-	    String sql = "SELECT * FROM users WHERE uid='" + oprNr + "' and password='" + pw + "'";
-	    ResultSet rs = stmt.executeQuery(sql);
-	    	if( rs.next()){
-	           
-	    	} else {
-	            //in this case enter when  result size is zero  it means user is invalid
-	       }
-	   }
-
-	//You can also validate user by result size if its comes zero user is invalid else user is valid
-
-
-	    } catch (SQLException err) {
-	        JOptionPane.showMessageDialog(this, err.getMessage());
-	    }*/
-
 }
