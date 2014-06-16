@@ -50,8 +50,8 @@ public class Main extends JPanel{
 		tab.setEnabledAt(0, true);
 		tab.setEnabledAt(1, true);
 		// tab.setEnabledAt(2, false);
-		// Fjern kommentering, når I er færdige med program. Ellers skal I logge på, hver gang I vil ind og teste scale PuzH
-		// Husk at fjerne kommentering i GuiLogin.java, linje ca. ~174 (kan være flyttet, efter at ny kode er blevet tilføjet)
+		// Fjern kommentering, nÃ¥r I er fÃ¦rdige med program. Ellers skal I logge pÃ¥, hver gang I vil ind og teste scale PuzH
+		// Husk at fjerne kommentering i GuiLogin.java, linje ca. ~174 (kan vÃ¦re flyttet, efter at ny kode er blevet tilfÃ¸jet)
 		
 		add(tab);
 		

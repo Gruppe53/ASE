@@ -49,7 +49,7 @@ public class GuiLogin extends JComponent {
 		ctrlPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.decode("#d5dfe5")), "Login"));
 		ctrlPanel.setBackground(Color.white);
 		
-		userName = new JLabel("Operateor nr.:");
+		userName = new JLabel("OperatÃ¸r nr.:");
 		userPass = new JLabel("Password:");
 		oprId = new JTextField(8);
 		oprId.setPreferredSize(new Dimension(98,20));
@@ -172,8 +172,8 @@ public class GuiLogin extends JComponent {
 	private void userLogout() {
 		if(opr.getActive()) {
 			//tab.setEnabledAt(2, false);
-			// Fjern kommentering her også, når I er done.
-			// 0 = Connection tab, 1 = Login tab, 2 = Scale tab. Når du logger ud, siger du at Login tab skal være deaktiveret... ^_^
+			// Fjern kommentering her ogsÃ¥, nÃ¥r I er done.
+			// 0 = Connection tab, 1 = Login tab, 2 = Scale tab. Nï¿½r du logger ud, siger du at Login tab skal vÃ¦re deaktiveret... ^_^
 			
 			userLogout.setEnabled(false);
 			userLogin.setEnabled(true);
