@@ -32,14 +32,14 @@ public class GuiLogin extends JComponent {
 	
 	private JTabbedPane tab;
 	
-	private JTextArea textArea = new JTextArea();;
+	private JTextArea textArea = new JTextArea();
 	
 	public GuiLogin(IOperatorDAO opr, JTabbedPane tab) {
 		this.opr = opr;
 		this.tab = tab;
 		
 		setLayout(new MigLayout());
-		
+
 		userPanel = new JPanel(new MigLayout());
 		userPanel.setBorder(BorderFactory.createBevelBorder(1, Color.decode("#ffffff"), Color.decode("#898c95"), Color.decode("#898c95"), Color.decode("#f0f0f0")));
 		userPanel.setBackground(Color.WHITE);
@@ -118,11 +118,13 @@ public class GuiLogin extends JComponent {
 	}
 			
 	private void userLogin() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
-		Connector cn = new Connector();
 		int databaseUsername = -1;
 		String databasePassword = "";
 		
-		int oprNr;
+		DBAccess con = new DBAccess("72.13.93.206", 3307, "gruppe55", "gruppe55", "55gruppe");
+		// Syntaksen er: DBAccess("host", port, "database", "username", "password") - port er en int, resten string
+		
+		int oprNr = -1;
 		
 		try {
 			oprNr = Integer.parseInt(oprId.getText());
@@ -130,20 +132,25 @@ public class GuiLogin extends JComponent {
 			oprNr = -1;
 		}
 		
-		char[] pw = pass.getPassword();
+		String pw = new String(pass.getPassword());
+		
 		try {
-			if (oprNr != -1 && pass!=null) {
-				String sql = "SELECT * FROM users WHERE uid='" + oprNr + "' and password='" + pw + "'";
-				ResultSet rs = cn.doQuery(sql);
-	    
+			if (oprNr != -1 && pass != null) {
+				ResultSet rs = con.doSqlQuery("SELECT * FROM user WHERE u_id = " + oprNr + " AND password = '" + pw + "'");
+				
 		    	while( rs.next()) {
-		           databaseUsername = rs.getInt("uid");
-		           databasePassword = rs.getString("Password");
+		    		databaseUsername = rs.getInt("u_id");
+		    		databasePassword = rs.getString("password");
+		    		opr = new OperatorDAO(rs.getString("u_name"));
 		    	}
+		    	
 		    	if (oprNr == databaseUsername && pw.equals(databasePassword)) {
 		    		userLogin.setEnabled(false);
 					oprId.setEnabled(false);
 					pass.setEnabled(false);
+					userLogout.setEnabled(true);
+					
+					tab.setEnabledAt(2, true);
 					
 					try {
 						textArea.append("[" + getDate() + "] Logged in as " + opr.getOperator(oprNr) + "\n");
@@ -164,7 +171,9 @@ public class GuiLogin extends JComponent {
 	
 	private void userLogout() {
 		if(opr.getActive()) {
-			tab.setEnabledAt(1, false);
+			//tab.setEnabledAt(2, false);
+			// Fjern kommentering her også, når I er done.
+			// 0 = Connection tab, 1 = Login tab, 2 = Scale tab. Når du logger ud, siger du at Login tab skal være deaktiveret... ^_^
 			
 			userLogout.setEnabled(false);
 			userLogin.setEnabled(true);

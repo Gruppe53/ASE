@@ -6,5 +6,4 @@ public interface IOperatorDAO {
 	String getInitials(int id);
 	boolean getActive();
 	void userLogout();
-
 }

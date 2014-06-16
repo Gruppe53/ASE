@@ -5,6 +5,12 @@ import java.util.*;
 public class OperatorDAO implements IOperatorDAO {
 	private IOperatorDTO opr;
 	private int active;
+	
+	private String name;
+	
+	public OperatorDAO(String name) {
+		this.name = name;
+	}
 
 	public OperatorDAO(IOperatorDTO opr) {
 		this.opr = opr;
@@ -12,7 +18,7 @@ public class OperatorDAO implements IOperatorDAO {
 
 	@Override
 	public String getOperator(int id) throws DALException {
-		return opr.getName(id) +  ", ID: " + opr.getOprId(id);
+		return name +  ", ID: " + id;
 	}
 
 

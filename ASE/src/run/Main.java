@@ -35,7 +35,6 @@ public class Main extends JPanel{
 		tab = new JTabbedPane();
 		tab.setOpaque(true);
 		
-		
 		con = new TerminalConnection();
 		terminal = new Terminal(con);
 		TGUI = new TerminalGUI(terminal);
@@ -48,8 +47,11 @@ public class Main extends JPanel{
 		tab.addTab("Log in", GLogin);
 		tab.addTab("Scale", TGUI);
 		
+		tab.setEnabledAt(0, true);
 		tab.setEnabledAt(1, true);
-		tab.setEnabledAt(2, true);
+		// tab.setEnabledAt(2, false);
+		// Fjern kommentering, når I er færdige med program. Ellers skal I logge på, hver gang I vil ind og teste scale PuzH
+		// Husk at fjerne kommentering i GuiLogin.java, linje ca. ~174 (kan være flyttet, efter at ny kode er blevet tilføjet)
 		
 		add(tab);
 		
