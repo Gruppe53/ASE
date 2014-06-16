@@ -38,6 +38,7 @@ public class Main extends JPanel{
 		con = new TerminalConnection();
 		terminal = new Terminal(con);
 		TGUI = new TerminalGUI(terminal);
+		CGUI = new ConnectGUI(terminal);
 		
 		oprDTO = new OperatorDTO();
 		oprDAO = new OperatorDAO(oprDTO);
