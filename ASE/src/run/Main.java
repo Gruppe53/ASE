@@ -44,9 +44,9 @@ public class Main extends JPanel{
 		oprDAO = new OperatorDAO(oprDTO);
 		GLogin = new GuiLogin(oprDAO, tab);
 		
-		tab.addTab("Connect", CGUI);
+		tab.addTab("Forbind", CGUI);
 		tab.addTab("Log in", GLogin);
-		tab.addTab("Scale", TGUI);
+		tab.addTab("Vægt", TGUI);
 		
 		tab.setEnabledAt(0, true);
 		tab.setEnabledAt(1, false);
@@ -78,7 +78,7 @@ public class Main extends JPanel{
 	public static void main(String[] args) {
 		javax.swing.SwingUtilities.invokeLater(new Runnable(){
 			public void run() {
-				createAndShowGUI("Scale");
+				createAndShowGUI("Vægt");
 				
 			}
 		});

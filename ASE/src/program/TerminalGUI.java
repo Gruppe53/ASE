@@ -54,7 +54,7 @@ public class TerminalGUI extends JPanel {
 		setLayout(new MigLayout());
 		
 		scaPanel.setBorder(BorderFactory.createBevelBorder(1, Color.decode("#ffffff"), Color.decode("#898c95"), Color.decode("#898c95"), Color.decode("#f0f0f0")));
-		scaPanel.setBackground(Color.WHITE);
+		scaPanel.setBackground(Color.white);
 		
 		
 		// Scale command buttons
