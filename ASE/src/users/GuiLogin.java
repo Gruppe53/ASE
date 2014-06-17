@@ -4,8 +4,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.sql.*;
 
@@ -78,7 +76,7 @@ public class GuiLogin extends JComponent {
 		txtPanel.setBackground(Color.white);
 		txtPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.decode("#d5dfe5")), "Console"));
 		txtPanel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		txtPanel.setPreferredSize(new Dimension(400, 250));
+		txtPanel.setPreferredSize(new Dimension(400, 279));
 		
 		textArea.setLineWrap(true);
 		textArea.setWrapStyleWord(true);
@@ -136,7 +134,7 @@ public class GuiLogin extends JComponent {
 		
 		try {
 			if (oprNr != -1 && pass != null) {
-				ResultSet rs = con.doSqlQuery("SELECT * FROM user WHERE u_id = " + oprNr + " AND password = '" + pw + "'");
+				ResultSet rs = con.doSqlQuery("SELECT * FROM user WHERE u_id = " + oprNr + " AND password = '" + pw + "'" );
 				
 		    	while( rs.next()) {
 		    		databaseUsername = rs.getInt("u_id");
@@ -181,6 +179,8 @@ public class GuiLogin extends JComponent {
 			pass.setEnabled(true);
 			
 			opr.userLogout();
+			
+			tab.setEnabledAt(2, false);
 			
 			textArea.append("[" + getDate() + "] Logged out.\n");
 		}

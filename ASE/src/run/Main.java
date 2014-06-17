@@ -38,7 +38,7 @@ public class Main extends JPanel{
 		con = new TerminalConnection();
 		terminal = new Terminal(con);
 		TGUI = new TerminalGUI(terminal);
-		CGUI = new ConnectGUI(terminal);
+		CGUI = new ConnectGUI(terminal, tab);
 		
 		oprDTO = new OperatorDTO();
 		oprDAO = new OperatorDAO(oprDTO);
@@ -49,8 +49,8 @@ public class Main extends JPanel{
 		tab.addTab("Scale", TGUI);
 		
 		tab.setEnabledAt(0, true);
-		tab.setEnabledAt(1, true);
-		// tab.setEnabledAt(2, false);
+		tab.setEnabledAt(1, false);
+		tab.setEnabledAt(2, false);
 		// Fjern kommentering, når I er færdige med program. Ellers skal I logge på, hver gang I vil ind og teste scale PuzH
 		// Husk at fjerne kommentering i GuiLogin.java, linje ca. ~174 (kan være flyttet, efter at ny kode er blevet tilføjet)
 		

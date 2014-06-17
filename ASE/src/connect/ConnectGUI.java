@@ -4,7 +4,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import program.*;
+
 import javax.swing.*;
 
 import net.miginfocom.swing.MigLayout;
@@ -29,12 +31,13 @@ public class ConnectGUI extends JComponent {
 	private JButton conButton = new JButton("Connect");
 	private JButton disButton = new JButton("Disconnect");
 	
-	
+	private JTabbedPane tab;
 	// Text panel (Console)
 	private JTextArea textArea = new JTextArea();
 
-	public ConnectGUI(ITerminal terminal) {
+	public ConnectGUI(ITerminal terminal, JTabbedPane tab) {
 		this.terminal = terminal;
+		this.tab = tab;
 		
 		// General setup
 		setLayout(new MigLayout());
@@ -88,7 +91,7 @@ public class ConnectGUI extends JComponent {
 		txtPanel.setBackground(Color.white);
 		txtPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.decode("#d5dfe5")), "Console"));
 		txtPanel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		txtPanel.setPreferredSize(new Dimension(400, 200));
+		txtPanel.setPreferredSize(new Dimension(400, 302));
 		
 		textArea.setLineWrap(true);
 		textArea.setWrapStyleWord(true);
@@ -131,6 +134,7 @@ public class ConnectGUI extends JComponent {
 				field.setEnabled(false);
 			
 			port.setEnabled(false);
+			tab.setEnabledAt(1, true);
 		}
 		else
 			textArea.append("[" + getDate() + "]\t" + compare + "\n");
@@ -146,6 +150,7 @@ public class ConnectGUI extends JComponent {
 			field.setEnabled(true);
 		
 		port.setEnabled(true);
+		tab.setEnabledAt(1, false);
 	}
 	
 	private String getDate() {

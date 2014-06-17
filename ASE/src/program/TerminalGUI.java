@@ -58,7 +58,7 @@ public class TerminalGUI extends JPanel {
 		
 		
 		// Scale command buttons
-		cmdPanel.setPreferredSize(new Dimension(400, 60));
+		cmdPanel.setPreferredSize(new Dimension(300, 60));
 		cmdPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.decode("#d5dfe5")), "Terminal commands"));
 		cmdPanel.setBackground(Color.white);
 		//TODO husk at gøre dem false igen
