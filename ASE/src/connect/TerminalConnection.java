@@ -2,7 +2,6 @@ package connect;
 
 import java.io.*;
 import java.net.*;
-import program.*;
 
 public class TerminalConnection implements ITerminalConnection {
 	private String host;
