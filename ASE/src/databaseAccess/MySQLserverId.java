@@ -3,12 +3,12 @@ package databaseAccess;
 public abstract class MySQLserverId {
 
 	public static final String
-	server = "phpmyadmin.phelweg.dk",
-	database = "",
-	username = "phelweg_dk",
-	password = "SXhktjpr";
+	server = "72.13.93.206",
+	database = "gruppe55",
+	username = "gruppe55",
+	password = "55gruppe";
 	
 	public static final int
-	port = 3306;
+	port = 3307;
 	
 }

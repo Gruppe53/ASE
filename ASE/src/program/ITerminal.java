@@ -8,7 +8,11 @@ public interface ITerminal {
 	String terminalZero();
 	String terminalMessage(String msg);
 	String terminalOkWeight();
-	String terminalOkProductBatch(String productBatchNumber);
+	String terminalOkGetPrescription(String productBatchNumber);
+	String terminalOkGetMaterialId(String productBatchNumber);
+	String terminalOkGetMaterialName(String productBatchNumber);
 	String terminalDisplay();
 	String getConnection();
+	double getCurrentWeight();
+	boolean tolerableWeight(String productBatchNumber);
 }
