@@ -146,6 +146,7 @@ public class TerminalGUI extends JPanel {
 		TerminalOkWeight.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 TerminalOkWeight();
+                TerminalOkWeight.setEnabled(false);
             }
 		});
 		
@@ -175,22 +176,18 @@ public class TerminalGUI extends JPanel {
 		//makes sure that it can only begin weighing if nothings on the scale
 		if(buttonPressedCount == 0 && currentWeight <= 50 && currentWeight >= -20) {
 			TerminalOkWeight.setEnabled(true);
+			buttonPressedCount++;
 		}
-		//	terminal.terminalOkWeight();
-		//	buttonPressedCount++;
-		//}
-		//	//second time you press
-		//	if(buttonPressedCount == 1){
-		//		terminal.terminalOkWeight();
-		//		buttonPressedCount++;
-		//	}
-		//		if(buttonPressedCount > 1 && terminal.tolerableWeight(productBatchNumber)) {
-		//			terminal.terminalOkWeight();
-		//			buttonPressedCount++;
-		//		}
-		//		else {
-		//			
-		//		}
+			//second time you press
+			if(buttonPressedCount == 1){
+				TerminalOkWeight.setEnabled(true);
+				buttonPressedCount++;
+			}
+				if(buttonPressedCount > 1 && terminal.tolerableWeight(productBatchNumber)) {
+					TerminalOkWeight.setEnabled(true);
+					buttonPressedCount++;
+				}
+				
 		else {
 			textAreaConsole.append("[" + getDate() + "]\t rengør vægt eller fjern evt. beholdere på vægten og tryk READ igen");
 			TerminalOkWeight.setEnabled(false);
