@@ -1,5 +1,6 @@
 package program;
 
+
 public interface ITerminal {
 	String terminalConnect (String host, String port);
 	String terminalDisconnect();
@@ -7,12 +8,12 @@ public interface ITerminal {
 	String terminalTare();
 	String terminalZero();
 	String terminalMessage(String msg);
-	String terminalOkWeight();
-	String terminalOkGetPrescription(String productBatchNumber);
-	String terminalOkGetMaterialId(String productBatchNumber);
-	String terminalOkGetMaterialName(String productBatchNumber);
+	String terminalOkWeight() throws Exception;
+	String terminalOkGetPrescription(String productBatchNumber) throws Exception;
+	String terminalOkGetMaterialId(String productBatchNumber) throws Exception;
+	String terminalOkGetMaterialName(String productBatchNumber) throws Exception;
 	String terminalDisplay();
 	String getConnection();
 	double getCurrentWeight();
-	boolean tolerableWeight(String productBatchNumber);
+	boolean tolerableWeight(String productBatchNumber) throws Exception;
 }

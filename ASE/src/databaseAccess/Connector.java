@@ -8,6 +8,10 @@ import java.sql.Statement;
 
 public class Connector {
 
+	private Connection connect					= null;
+	private Statement statement					= null;
+	private ResultSet resultSet					= null;
+	
 	public static Connection connectToDatabase(String url, String username, String password)
 			throws InstantiationException, IllegalAccessException,
 			ClassNotFoundException, SQLException
@@ -40,5 +44,10 @@ public class Connector {
 	public static int doUpdate(String str) throws DALException {
 		try { return stm.executeUpdate(str); }
 		catch (SQLException e) { throw new DALException(e); }
+	}
+	public void closeSql() throws SQLException {
+		this.resultSet.close();
+		this.statement.close();
+		this.connect.close();
 	}
 }

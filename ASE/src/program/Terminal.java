@@ -15,6 +15,7 @@ public class Terminal implements ITerminal {
 	
 	private int okcount = 0;
 	private ITerminalConnection con;
+	private DBAccess dbAccess;
 	
 	public Terminal(ITerminalConnection con) {
 		this.con = con;
@@ -57,7 +58,7 @@ public class Terminal implements ITerminal {
 	}
 
 	@Override
-	public String terminalOkWeight() {
+	public String terminalOkWeight() throws Exception {
 		
 		if (okcount == 3){
 			okcount = 0;
@@ -70,10 +71,19 @@ public class Terminal implements ITerminal {
 		else 
 		if (okcount == 1) {
 			okcount++;
+			dbAccess = new DBAccess("72.13.93.206", 3307, "gruppe55", "gruppe55", "55gruppe");
 			try {
-				Connector.doUpdate("" + getDigit("S"));
+				dbAccess.doSqlUpdate("" + getDigit("S"));
 			} catch (DALException e) {
 				e.printStackTrace();
+			}
+			finally{
+				try{
+					dbAccess.closeSql();
+				}
+				catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
 			return terminalTare();
 		}
@@ -81,29 +91,38 @@ public class Terminal implements ITerminal {
 		//TODO fix update - dno how to
 		else {
 			okcount++;
+			dbAccess = new DBAccess("72.13.93.206", 3307, "gruppe55", "gruppe55", "55gruppe");
 			try {
-				Connector.doUpdate("ALTER TABLE" + getDigit("S"));
+				dbAccess.doSqlUpdate("ALTER TABLE" + getDigit("S"));
 			} catch (DALException e) {
 				e.printStackTrace();
 			}
+			finally{
+				try{
+					dbAccess.closeSql();
+				}
+				catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 			return terminalTare();
 		}
-	
+		
 		
 	}
 
 	@Override
-	public String terminalOkGetPrescription(String productBatchNumber) {
+	public String terminalOkGetPrescription(String productBatchNumber) throws Exception {
 		return getPrescription(productBatchNumber);
 	}
 	
 	@Override
-	public String terminalOkGetMaterialId(String productBatchNumber) {
+	public String terminalOkGetMaterialId(String productBatchNumber) throws Exception {
 		return getMaterialId(productBatchNumber);
 	}
 	
 	@Override
-	public String terminalOkGetMaterialName(String productBatchNumber) {
+	public String terminalOkGetMaterialName(String productBatchNumber) throws Exception {
 		return getMaterialName(productBatchNumber);
 	}
 	
@@ -129,7 +148,7 @@ public class Terminal implements ITerminal {
 	
 	
 	@Override
-	public boolean tolerableWeight(String productBatchNumber) {
+	public boolean tolerableWeight(String productBatchNumber) throws Exception {
 		boolean tolerable = false;
 		double weight = getCurrentWeight();
 		double netto = getNetto(productBatchNumber);
@@ -152,11 +171,12 @@ public class Terminal implements ITerminal {
 	}
 
 	
-	private String getPrescription(String productBatchNumber) {
-		ResultSet prescriptionNumber;
+	private String getPrescription(String productBatchNumber) throws Exception {
+		ResultSet prescriptionNumber = null;
 		String prescription = null;
+		dbAccess = new DBAccess("72.13.93.206", 3307, "gruppe55", "gruppe55", "55gruppe");
 		try {
-			prescriptionNumber = Connector.doQuery("SELECT pre_id FROM productbatch WHERE pb_id = '" + productBatchNumber + "'");
+			prescriptionNumber = dbAccess.doSqlQuery("SELECT pre_id FROM productbatch WHERE pb_id = '" + productBatchNumber + "'");
 			if(prescriptionNumber.next()) {
 				prescription = prescriptionNumber.getString("pre_id");
 			}
@@ -167,15 +187,25 @@ public class Terminal implements ITerminal {
 		catch (SQLException f) {
 			f.printStackTrace();
 		}
+		finally{
+			try{
+				dbAccess.closeSql();
+				prescriptionNumber.close();
+			}
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 		return prescription;
 	}
 	
-	private String getMaterialId(String productBatchNumber){
+	private String getMaterialId(String productBatchNumber) throws Exception{
 		String prescriptionId = getPrescription(productBatchNumber);
-		ResultSet materialIdResultSet;
+		ResultSet materialIdResultSet = null;
 		String materialId = null;
+		dbAccess = new DBAccess("72.13.93.206", 3307, "gruppe55", "gruppe55", "55gruppe");
 		try{
-			materialIdResultSet = Connector.doQuery("SELECT m_id FROM precomponent WHERE pre_id = '" + prescriptionId + "'");
+			materialIdResultSet = dbAccess.doSqlQuery("SELECT m_id FROM precomponent WHERE pre_id = '" + prescriptionId + "'");
 			if(materialIdResultSet.next()){
 				materialId = materialIdResultSet.getString("m_id");
 			}
@@ -186,15 +216,25 @@ public class Terminal implements ITerminal {
 		catch (SQLException f) {
 			f.printStackTrace();
 		}
+		finally{
+			try{
+				dbAccess.closeSql();
+				materialIdResultSet.close();
+			}
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 		return materialId;
 	}
 	
-	private String getMaterialName(String productBatchNumber){
+	private String getMaterialName(String productBatchNumber) throws Exception{
 		String materialId = getMaterialId(productBatchNumber);
-		ResultSet materialNameResultSet;
+		ResultSet materialNameResultSet = null;
 		String materialName = null;
+		dbAccess = new DBAccess("72.13.93.206", 3307, "gruppe55", "gruppe55", "55gruppe");
 		try{
-			materialNameResultSet = Connector.doQuery("SELECT m_name FROM materials WHERE m_id = '" + materialId + "'");
+			materialNameResultSet = dbAccess.doSqlQuery("SELECT m_name FROM materials WHERE m_id = '" + materialId + "'");
 			if(materialNameResultSet.next()){
 				materialName = materialNameResultSet.getString("m_name");
 			}
@@ -205,16 +245,26 @@ public class Terminal implements ITerminal {
 		catch (SQLException f) {
 			f.printStackTrace();
 		}
+		finally{
+			try{
+				dbAccess.closeSql();
+				materialNameResultSet.close();
+			}
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 		return materialName;
 	}
 	
-	private double getNetto(String productBatchNumber){
+	private double getNetto(String productBatchNumber) throws Exception{
 		String materialId = getMaterialId(productBatchNumber);
 		String prescriptionId = getPrescription(productBatchNumber);
-		ResultSet nettoResultSet;
+		ResultSet nettoResultSet = null;
 		double nettoDouble = 0;
+		dbAccess = new DBAccess("72.13.93.206", 3307, "gruppe55", "gruppe55", "55gruppe");
 		try{
-			nettoResultSet = Connector.doQuery("SELECT netto FROM precomponent WHERE pre_id = '" + prescriptionId + "' AND m_id = '" + materialId + "'");
+			nettoResultSet = dbAccess.doSqlQuery("SELECT netto FROM precomponent WHERE pre_id = '" + prescriptionId + "' AND m_id = '" + materialId + "'");
 			if(nettoResultSet.next()){
 				nettoDouble = nettoResultSet.getDouble("netto");
 			}
@@ -225,16 +275,26 @@ public class Terminal implements ITerminal {
 		catch (SQLException f) {
 			f.printStackTrace();
 		}
+		finally{
+			try{
+				dbAccess.closeSql();
+				nettoResultSet.close();
+			}
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 		return nettoDouble;
 	}
 
-	private double getTolerance(String productBatchNumber){
+	private double getTolerance(String productBatchNumber) throws Exception{
 		String materialId = getMaterialId(productBatchNumber);
 		String prescriptionId = getPrescription(productBatchNumber);
-		ResultSet toleranceResultSet;
+		ResultSet toleranceResultSet = null;
 		double tolerancedouble = 0;
+		dbAccess = new DBAccess("72.13.93.206", 3307, "gruppe55", "gruppe55", "55gruppe");
 		try{
-			toleranceResultSet = Connector.doQuery("SELECT tolerance FROM precomponent WHERE pre_id = '" + prescriptionId + "' AND m_id = '" + materialId + "'");
+			toleranceResultSet = dbAccess.doSqlQuery("SELECT tolerance FROM precomponent WHERE pre_id = '" + prescriptionId + "' AND m_id = '" + materialId + "'");
 			if(toleranceResultSet.next()){
 				tolerancedouble = toleranceResultSet.getDouble("tolerance");
 			}
@@ -244,6 +304,15 @@ public class Terminal implements ITerminal {
 		}
 		catch (SQLException f) {
 			f.printStackTrace();
+		}
+		finally{
+			try{
+				dbAccess.closeSql();
+				toleranceResultSet.close();
+			}
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return tolerancedouble;
 	}
