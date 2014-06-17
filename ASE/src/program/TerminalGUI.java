@@ -118,6 +118,10 @@ public class TerminalGUI extends JPanel {
 		recept.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.decode("#d5dfe5")),"Recept"));
 		recept.setPreferredSize(new Dimension(200,50));
 		
+		textAreaPrescription.setLineWrap(true);
+		textAreaPrescription.setWrapStyleWord(true);
+		textAreaPrescription.setEditable(false);
+		
 		repPanel.add(recept);
 		repPanel.setBackground(Color.white);
 		
@@ -125,6 +129,10 @@ public class TerminalGUI extends JPanel {
 		materialBatch.setBackground(Color.white);
 		materialBatch.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.decode("#d5dfe5")),"Råvarebatch"));
 		materialBatch.setPreferredSize(new Dimension(200,50));
+		
+		textAreaMaterialBatch.setLineWrap(true);
+		textAreaMaterialBatch.setWrapStyleWord(true);
+		textAreaMaterialBatch.setEditable(false);
 		
 		matPanel.add(materialBatch);
 		matPanel.setBackground(Color.white);
