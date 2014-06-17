@@ -25,7 +25,7 @@ public class GuiLogin extends JComponent {
 	private JPasswordField pass;
 	private JButton userLogin;
 	private JButton userLogout;
-
+	
 	private IOperatorDAO opr;
 	
 	private JTabbedPane tab;

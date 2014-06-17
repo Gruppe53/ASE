@@ -2,11 +2,15 @@ package program;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.*;
 
+import databaseAccess.DBAccess;
+import users.OperatorDAO;
 import net.miginfocom.swing.MigLayout;
 
 
@@ -32,6 +36,8 @@ public class TerminalGUI extends JPanel {
 	private JScrollPane recept;
 	private JScrollPane materialBatch;
 	private JTextField productBatchInput;
+	
+	private JComboBox<Integer> dropDown;
 	
 	//instances used
 	int buttonPressedCount = 0;
@@ -110,7 +116,30 @@ public class TerminalGUI extends JPanel {
 		
 		
 		productPanel.add(productBatch);
-		productPanel.add(productBatchInput);
+		//productPanel.add(productBatchInput);
+		
+		ArrayList<Integer> productBatchIDs = new ArrayList<Integer>();
+		
+		DBAccess con = new DBAccess("72.13.93.206", 3307, "gruppe55", "gruppe55", "55gruppe");
+		
+		try {
+			ResultSet rs = con.doSqlQuery("SELECT pb_id FROM productbatch");
+			
+	    	while( rs.next()) {
+	    		productBatchIDs.add(rs.getInt("pb_id"));
+	    	}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+				
+		dropDown = new JComboBox<Integer>();
+		
+		for(int i : productBatchIDs) {
+			dropDown.addItem(i);
+		}
+		
+		productPanel.add(dropDown);
+		
 		productPanel.setBackground(Color.white);
 		
 		recept = new JScrollPane(textAreaPrescription);
@@ -170,7 +199,9 @@ public class TerminalGUI extends JPanel {
 		TerminalOkProductBatch.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	// Get text from JTextField
-        		String productBatchNumber = productBatchInput.getText();
+            	String productBatchNumber = dropDown.getSelectedItem().toString();
+            	
+        		//String productBatchNumber = productBatchInput.getText();
         		//returns Prescription
         		//returns materialId and Name
                 try {
@@ -181,9 +212,8 @@ public class TerminalGUI extends JPanel {
             }
         });
 		
-		add(scaPanel);
+		add(scaPanel);   	
 	}
-	
 
 	
 	private void TerminalRead() throws Exception {
@@ -229,9 +259,9 @@ public class TerminalGUI extends JPanel {
 		if(terminal.terminalOkGetPrescription(productBatchNumber)!=null){	
 		textAreaConsole.append("[" + getDate() + "]\n Recept num.: " + terminal.terminalOkGetPrescription(productBatchNumber) + 
 								"\n Råvare num.: " + terminal.terminalOkGetMaterialId(productBatchNumber) + 
-								"\n Råvare Navn: " + terminal.terminalOkGetMaterialName(productBatchNumber));
-		textAreaPrescription.append(terminal.terminalOkGetPrescription(productBatchNumber));
-		textAreaMaterialBatch.append(terminal.terminalOkGetMaterialId(productBatchNumber)+ " " + terminal.terminalOkGetMaterialName(productBatchNumber));
+								"\n Råvare Navn: " + terminal.terminalOkGetMaterialName(productBatchNumber) + "\n\n");
+		textAreaPrescription.setText(terminal.terminalOkGetPrescription(productBatchNumber));
+		textAreaMaterialBatch.setText(terminal.terminalOkGetMaterialId(productBatchNumber)+ " " + terminal.terminalOkGetMaterialName(productBatchNumber));
 		TerminalRead.setEnabled(true);
 		}
 	}
