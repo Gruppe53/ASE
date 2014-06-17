@@ -8,7 +8,7 @@ public interface ITerminal {
 	String terminalTare();
 	String terminalZero();
 	String terminalMessage(String msg);
-	String terminalOkWeight() throws Exception;
+	String terminalOkWeight(String productBatchNumber) throws Exception;
 	String terminalOkGetPrescription(String productBatchNumber) throws Exception;
 	String terminalOkGetMaterialId(String productBatchNumber) throws Exception;
 	String terminalOkGetMaterialName(String productBatchNumber) throws Exception;

@@ -137,7 +137,11 @@ public class TerminalGUI extends JPanel {
 		
 		TerminalRead.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                TerminalRead();
+                try {
+					TerminalRead();
+				} catch (Exception f) {
+					f.printStackTrace();
+				}
             	
             }
         });
@@ -145,7 +149,11 @@ public class TerminalGUI extends JPanel {
 		
 		TerminalOkWeight.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                TerminalOkWeight();
+                try {
+					TerminalOkWeight();
+				} catch (Exception f) {
+					f.printStackTrace();
+				}
                 TerminalOkWeight.setEnabled(false);
             }
 		});
@@ -157,7 +165,11 @@ public class TerminalGUI extends JPanel {
         		String productBatchNumber = productBatchInput.getText();
         		//returns Prescription
         		//returns materialId and Name
-                TerminalOkProductBatch(productBatchNumber);
+                try {
+					TerminalOkProductBatch(productBatchNumber);
+				} catch (Exception f) {
+					f.printStackTrace();
+				}
             }
         });
 		
@@ -166,7 +178,7 @@ public class TerminalGUI extends JPanel {
 	
 
 	
-	private void TerminalRead() {
+	private void TerminalRead() throws Exception {
 		String productBatchNumber = productBatchInput.getText();
 		double currentWeight = terminal.getCurrentWeight();
 		textAreaConsole.append("[" + getDate() + "]\t" + terminal.terminalRead() + "\n");
@@ -175,17 +187,20 @@ public class TerminalGUI extends JPanel {
 		}
 			
 		//makes sure that it can only begin weighing if nothings on the scale
-		if(buttonPressedCount == 0 && currentWeight <= 50 && currentWeight >= -20) {
+		if(buttonPressedCount == 0 && currentWeight <= 50) {
 			TerminalOkWeight.setEnabled(true);
+			TerminalRead.setEnabled(false);
 			buttonPressedCount++;
 		}
 			//second time you press
 			if(buttonPressedCount == 1){
 				TerminalOkWeight.setEnabled(true);
+				TerminalRead.setEnabled(false);
 				buttonPressedCount++;
 			}
 				if(buttonPressedCount > 1 && terminal.tolerableWeight(productBatchNumber)) {
 					TerminalOkWeight.setEnabled(true);
+					TerminalRead.setEnabled(false);
 					buttonPressedCount++;
 				}
 				
@@ -195,18 +210,20 @@ public class TerminalGUI extends JPanel {
 		}
 	}
 	
-	private void TerminalOkWeight() {
-		textAreaConsole.append("[" + getDate() + "]\t" + terminal.terminalOkWeight() + "\n");
+	private void TerminalOkWeight() throws Exception {
+		String productBatchNumber = productBatchInput.getText();
+		textAreaConsole.append("[" + getDate() + "]\t" + terminal.terminalOkWeight(productBatchNumber) + "\n");
 		TerminalOkWeight.setEnabled(false);
+		TerminalRead.setEnabled(true);
 	}
 	
-	private void TerminalOkProductBatch(String productBatchNumber) {
+	private void TerminalOkProductBatch(String productBatchNumber) throws Exception {
 		if(terminal.terminalOkGetPrescription(productBatchNumber)!=null){	
 		textAreaConsole.append("[" + getDate() + "]\n Recept num.: " + terminal.terminalOkGetPrescription(productBatchNumber) + 
 								"\n Råvare num.: " + terminal.terminalOkGetMaterialId(productBatchNumber) + 
 								"\n Råvare Navn: " + terminal.terminalOkGetMaterialName(productBatchNumber));
 		textAreaPrescription.append(terminal.terminalOkGetPrescription(productBatchNumber));
-		textAreaMaterialBatch.append(terminal.terminalOkGetMaterialId(productBatchNumber) + terminal.terminalOkGetMaterialName(productBatchNumber));
+		textAreaMaterialBatch.append(terminal.terminalOkGetMaterialId(productBatchNumber)+ " " + terminal.terminalOkGetMaterialName(productBatchNumber));
 		TerminalRead.setEnabled(true);
 		}
 	}
