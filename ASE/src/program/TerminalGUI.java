@@ -156,6 +156,7 @@ public class TerminalGUI extends JPanel {
             	// Get text from JTextField
         		String productBatchNumber = productBatchInput.getText();
         		//returns Prescription
+        		//returns materialId and Name
                 TerminalOkProductBatch(productBatchNumber);
             }
         });
@@ -192,9 +193,6 @@ public class TerminalGUI extends JPanel {
 			textAreaConsole.append("[" + getDate() + "]\t rengør vægt eller fjern evt. beholdere på vægten og tryk READ igen");
 			TerminalOkWeight.setEnabled(false);
 		}
-	}
-	private void TerminalZero() {
-		textAreaConsole.append("[" + getDate() + "]\t" + terminal.terminalZero() + "\n");
 	}
 	
 	private void TerminalOkWeight() {
