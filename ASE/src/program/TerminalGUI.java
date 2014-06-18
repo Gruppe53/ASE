@@ -10,7 +10,6 @@ import java.util.Date;
 import javax.swing.*;
 
 import databaseAccess.DBAccess;
-import users.OperatorDAO;
 import net.miginfocom.swing.MigLayout;
 
 
