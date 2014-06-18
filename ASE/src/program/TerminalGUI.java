@@ -36,7 +36,8 @@ public class TerminalGUI extends JPanel {
 	private JScrollPane materialBatch;
 	private JTextField productBatchInput;
 	
-	private JComboBox<Integer> dropDown;
+	private JComboBox<Integer> dropDownProductBatch;
+	//private JComboBox<Integer> dropDownMaterialBatch;
 	
 	//instances used
 	int buttonPressedCount = 0;
@@ -120,24 +121,26 @@ public class TerminalGUI extends JPanel {
 		ArrayList<Integer> productBatchIDs = new ArrayList<Integer>();
 		
 		DBAccess con = new DBAccess("72.13.93.206", 3307, "gruppe55", "gruppe55", "55gruppe");
-		
+						
+		dropDownProductBatch = new JComboBox<Integer>();
 		try {
 			ResultSet rs = con.doSqlQuery("SELECT pb_id FROM productbatch");
 			
-	    	while( rs.next()) {
+	    	while(rs.next()) {
 	    		productBatchIDs.add(rs.getInt("pb_id"));
 	    	}
+	    	con.closeSql();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-				
-		dropDown = new JComboBox<Integer>();
+
 		
 		for(int i : productBatchIDs) {
-			dropDown.addItem(i);
-		}
+			dropDownProductBatch.addItem(i);
 		
-		productPanel.add(dropDown);
+
+		}
+		productPanel.add(dropDownProductBatch);
 		
 		productPanel.setBackground(Color.white);
 		
@@ -163,8 +166,31 @@ public class TerminalGUI extends JPanel {
 		textAreaMaterialBatch.setEditable(false);
 		
 		matPanel.add(materialBatch);
-		matPanel.setBackground(Color.white);
+		/*
+	ArrayList<Integer> materialBatchIDs = new ArrayList<Integer>();
 		
+	 	con = new DBAccess("72.13.93.206", 3307, "gruppe55", "gruppe55", "55gruppe");
+		
+		try {
+			ResultSet rs = con.doSqlQuery("SELECT mbId FROM pbcomponent WHERE netto = '" + 0 + "'");
+			
+	    	while( rs.next()) {
+	    		materialBatchIDs.add(rs.getInt("pb_id"));
+	    	}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+				
+		dropDownMaterialBatch = new JComboBox<Integer>();
+		
+		for(int i : productBatchIDs) {
+			dropDownMaterialBatch.addItem(i);
+		}
+		
+		productPanel.add(dropDownMaterialBatch);
+		*/	
+		matPanel.setBackground(Color.white);
+	
 		// Add to Main panel
 		scaPanel.add(proPanel);
 		scaPanel.add(stsPanel, "wrap");
@@ -198,7 +224,7 @@ public class TerminalGUI extends JPanel {
 		TerminalOkProductBatch.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	// Get text from JTextField
-            	String productBatchNumber = dropDown.getSelectedItem().toString();
+            	String productBatchNumber = dropDownProductBatch.getSelectedItem().toString();
             	
         		//String productBatchNumber = productBatchInput.getText();
         		//returns Prescription

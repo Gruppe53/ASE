@@ -41,21 +41,21 @@ public class Terminal implements ITerminal {
 	public String terminalRead() {
 		String str = con.getTerminalResponse("S");
 		
-		return "Current scale weight: " + getDigit(str) + " " + getUnit(str);
+		return "På vægten er der nu: " + getDigit(str) + " " + getUnit(str);
 	}
 
 	@Override
 	public String terminalTare() {
 		String str = con.getTerminalResponse("T");
 		
-		return "Scale tared, tara reads: " + getDigit(str) + " " + getUnit(str);
+		return "vægten er tareret, taraen er: " + getDigit(str) + " " + getUnit(str);
 	}
 
 	@Override
 	public String terminalZero() {
 		con.getTerminalResponse("Z");
 		
-		return "Scale has been zeroed.";
+		return "Vægten er nulstillet.";
 	}
 
 	@Override
@@ -147,7 +147,7 @@ public class Terminal implements ITerminal {
 	public String terminalDisplay() {
 		con.getTerminalResponse("DW");
 		
-		return "Weight is now displayed on scale";
+		return "den aktuelle vægt vises nu på vægten.";
 	}
 	
 	
@@ -210,7 +210,6 @@ public class Terminal implements ITerminal {
 		dbAccess = new DBAccess("72.13.93.206", 3307, "gruppe55", "gruppe55", "55gruppe");
 		try{
 			materialIdResultSet = dbAccess.doSqlQuery("SELECT m_id FROM precomponent WHERE pre_id = '" + prescriptionId + "'");
-			//Ars = materialIdResultSet;
 			if(materialIdResultSet.next()){
 				materialId = materialIdResultSet.getString("m_id");
 				
@@ -233,17 +232,7 @@ public class Terminal implements ITerminal {
 		}
 		return materialId;
 	}
-//	private String getNextMaterialName(){
-		
-	//	if (Ars.next()){
-			
-	//	}
-	//	catch(){
-			
-	//	}
-		
-	//	return null;
-	//}
+
 	
 	private String getMaterialName(String productBatchNumber) throws Exception{
 		String materialId = getMaterialId(productBatchNumber);
