@@ -68,7 +68,7 @@ public class TerminalGUI extends JPanel {
 		cmdPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.decode("#d5dfe5")), "Terminal commands"));
 		cmdPanel.setBackground(Color.white);
 		//TODO husk at gøre dem false igen
-		TerminalRead.setEnabled(true);
+		TerminalRead.setEnabled(false);
 
 		TerminalOkWeight.setEnabled(false);
 
