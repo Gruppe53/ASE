@@ -32,7 +32,7 @@ public class TestConnect extends JComponent {
 		// Instantiate objects
 		con = new TerminalConnection();
 		scale = new Terminal(con);
-		sDialog = new ConnectGUI(scale);
+		sDialog = new ConnectGUI(scale, tab);
 		
 //		tab.addTab("Userpanel", uDialog);
 		tab.addTab("Scale Console", sDialog);
