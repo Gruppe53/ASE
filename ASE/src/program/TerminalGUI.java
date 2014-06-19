@@ -167,7 +167,7 @@ public class TerminalGUI extends JPanel {
 		
 		okpPanel.add(TerminalOkMaterialBatch);
 		TerminalOkMaterialBatch.setEnabled (true);
-		materialBatch = new JLabel("Materialbatch");
+		materialBatch = new JLabel("Råvarebatch");
 		matPanel.add(materialBatch);
 		
 		
@@ -213,10 +213,10 @@ public class TerminalGUI extends JPanel {
         		dropDownMaterialBatch = new JComboBox<Integer>();
         		ResultSet rs = null;
         		try {
-        			rs = con2.doSqlQuery("SELECT mb_id, m_name FROM matbatch NATURAL JOIN materials NATURAL JOIN precomponent WHERE pre_id = " + terminal.terminalOkGetPrescription(dropDownProductBatch.getSelectedItem().toString()) + " AND (amount > netto) AND m_id NOT IN (SELECT m_id FROM pbcomponent NATURAL JOIN matbatch WHERE pb_id = "+ dropDownProductBatch.getSelectedItem().toString() + ")");
+        			rs = con2.doSqlQuery("SELECT mb_id, m_name FROM matbatch NATURAL JOIN materials NATURAL JOIN precomponent WHERE pre_id = " + terminal.terminalOkGetPrescription(dropDownProductBatch.getSelectedItem().toString()) + " AND (amount >= netto) AND m_id NOT IN (SELECT m_id FROM pbcomponent NATURAL JOIN matbatch WHERE pb_id = "+ dropDownProductBatch.getSelectedItem().toString() + ")");
         			
         	    	while( rs.next()) {
-        	    		materialBatchIDs.add(rs.getInt("mb_id, m_name"));
+        	    		materialBatchIDs.add(rs.getInt("mb_id"));
         	    	}
         	    	con2.closeSql();
         		} catch(Exception f) {
