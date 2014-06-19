@@ -34,7 +34,6 @@ public class TerminalGUI extends JPanel {
 	private JLabel productBatch;
 	private JScrollPane recept;
 	private JLabel materialBatch;
-	private JTextField productBatchInput;
 	
 	private JComboBox<Integer> dropDownProductBatch;
 	private JComboBox<Integer> dropDownMaterialBatch;
@@ -176,8 +175,9 @@ public class TerminalGUI extends JPanel {
 	 	//DBAccess con2 = new DBAccess("72.13.93.206", 3307, "gruppe55", "gruppe55", "55gruppe");
 		
 		dropDownMaterialBatch = new JComboBox<Integer>();
+		ResultSet rs = null;
 		try {
-			ResultSet rs = con.doSqlQuery("SELECT mb_id, m_name FROM matbatch NATURAL JOIN materials NATURAL JOIN precomponent WHERE pre_id = " + rs.getInt("pre_id") + "AND amount >= netto AND m_id NOT IN (SELECT m_id FROM pbcomponent NATURAL JOIN matbatch WHERE pb_id = productbatchNumber)");
+			rs = con.doSqlQuery("SELECT mb_id, m_name FROM matbatch NATURAL JOIN materials NATURAL JOIN precomponent WHERE pre_id = " + terminal.terminalOkGetPrescription(dropDownProductBatch.getSelectedItem().toString()) + "AND amount >= netto AND m_id NOT IN (SELECT m_id FROM pbcomponent NATURAL JOIN matbatch WHERE pb_id = productbatchNumber)");
 			
 	    	while( rs.next()) {
 	    		materialBatchIDs.add(rs.getInt("mb_id, m_name"));
@@ -247,7 +247,7 @@ public class TerminalGUI extends JPanel {
 
 	
 	private void TerminalRead() throws Exception {
-		String productBatchNumber = productBatch.getText();
+		String productBatchNumber = dropDownProductBatch.getSelectedItem().toString();
 		double currentWeight = terminal.getCurrentWeight();
 		textAreaConsole.append("[" + getDate() + "]\t" + terminal.terminalRead() + "\n");
 		if(buttonPressedCount == 3) {
@@ -279,7 +279,7 @@ public class TerminalGUI extends JPanel {
 	}
 	
 	private void TerminalOkWeight() throws Exception {
-		String productBatchNumber = productBatchInput.getText();
+		String productBatchNumber = dropDownProductBatch.getSelectedItem().toString();
 		textAreaConsole.append("[" + getDate() + "]\t" + terminal.terminalOkWeight(productBatchNumber) + "\n");
 		TerminalOkWeight.setEnabled(false);
 		TerminalRead.setEnabled(true);
