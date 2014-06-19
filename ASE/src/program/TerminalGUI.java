@@ -204,7 +204,7 @@ public class TerminalGUI extends JPanel {
         	    	while(rs.next()) {
         	    		dropDownMaterialBatch.addItem("["+rs.getInt("mb_id")+"] " + rs.getString("m_name") + " ("+rs.getDouble("amount")+" g)");
         	    	}
-        	    	con2.closeSql();
+        	    	
         		} catch(Exception f) {
         			f.printStackTrace();
         		}
@@ -218,9 +218,12 @@ public class TerminalGUI extends JPanel {
 					TerminalOkProductBatch(productBatchNumber);
 					TerminalOkProductBatch.setEnabled(false);
 					dropDownProductBatch.setEnabled(false);
+					con2.doSqlUpdate("UPDATE productbatch SET status = '1' WHERE pb_id = '" + "'");
+				    con2.closeSql();
 				} catch (Exception f) {
 					f.printStackTrace();
 				}
+            
             }
 		});
 		
@@ -291,14 +294,14 @@ public class TerminalGUI extends JPanel {
 		textAreaConsole.append("[" + getDate() + "]\t" + terminal.terminalOkWeight(productBatchNumber) + "\n");
 		DBAccess con = new DBAccess();
 		
-		ResultSet rsi = con.doSqlQuery("SELECT COUNT(*) FROM precomponent WHERE pre_id = prescriptionNumber");
-		ResultSet rsj = con.doSqlQuery("SELECT COUNT(*) FROM pbcomponent WHERE pb_id = productbatchNumber");
+		ResultSet rsi = con.doSqlQuery("SELECT COUNT(*) FROM precomponent WHERE pre_id = '" + terminal.terminalOkGetPrescription(productBatchNumber) + "'");
+		ResultSet rsj = con.doSqlQuery("SELECT COUNT(*) FROM pbcomponent WHERE pb_id = '" + productBatchNumber + "'");
 		
 		int i = rsi.getInt("COUNT(*)");
 		int j = rsj.getInt("COUNT(*)");
 		
 		if(buttonPressedCount > 1 && i==j ){
-			con.doSqlUpdate("UPDATE productbatch SET status = '2' WHERE pb_id = productbatchnumber");
+			con.doSqlUpdate("UPDATE productbatch SET status = '2' WHERE pb_id = '" + "'");
 			TerminalOkWeight.setEnabled(false);
 			TerminalRead.setEnabled(false);
 			// TODO afvejning er færdig her - alt skal nulstilles
