@@ -129,7 +129,7 @@ public class TerminalGUI extends JPanel {
 	    	while(rs.next()) {
 	    		productBatchIDs.add(rs.getInt("pb_id"));
 	    	}
-	    	//con.closeSql();
+	    	con.closeSql();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -170,30 +170,7 @@ public class TerminalGUI extends JPanel {
 		materialBatch = new JLabel("Materialbatch");
 		matPanel.add(materialBatch);
 		
-		ArrayList<Integer> materialBatchIDs = new ArrayList<Integer>();
 		
-	 	//DBAccess con2 = new DBAccess("72.13.93.206", 3307, "gruppe55", "gruppe55", "55gruppe");
-		
-		dropDownMaterialBatch = new JComboBox<Integer>();
-		ResultSet rs = null;
-		try {
-			rs = con.doSqlQuery("SELECT mb_id, m_name FROM matbatch NATURAL JOIN materials NATURAL JOIN precomponent WHERE pre_id = " + terminal.terminalOkGetPrescription(dropDownProductBatch.getSelectedItem().toString()) + "AND amount >= netto AND m_id NOT IN (SELECT m_id FROM pbcomponent NATURAL JOIN matbatch WHERE pb_id = productbatchNumber)");
-			
-	    	while( rs.next()) {
-	    		materialBatchIDs.add(rs.getInt("mb_id, m_name"));
-	    	}
-	    	con.closeSql();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-			
-		for(int i : materialBatchIDs) {
-			dropDownMaterialBatch.addItem(i);
-		}
-		
-		matPanel.add(dropDownMaterialBatch);
-		dropDownMaterialBatch.enable(false);
 		
 		matPanel.setBackground(Color.white);
 	
@@ -229,7 +206,30 @@ public class TerminalGUI extends JPanel {
 		
 		TerminalOkProductBatch.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	// Get text from JTextField
+            	
+            	ArrayList<Integer> materialBatchIDs = new ArrayList<Integer>();
+        	 	DBAccess con2 = new DBAccess("72.13.93.206", 3307, "gruppe55", "gruppe55", "55gruppe");
+        		
+        		dropDownMaterialBatch = new JComboBox<Integer>();
+        		ResultSet rs = null;
+        		try {
+        			rs = con2.doSqlQuery("SELECT mb_id, m_name FROM matbatch NATURAL JOIN materials NATURAL JOIN precomponent WHERE pre_id = " + terminal.terminalOkGetPrescription(dropDownProductBatch.getSelectedItem().toString()) + "AND amount >= netto AND m_id NOT IN (SELECT m_id FROM pbcomponent NATURAL JOIN matbatch WHERE pb_id = productbatchNumber)");
+        			
+        	    	while( rs.next()) {
+        	    		materialBatchIDs.add(rs.getInt("mb_id, m_name"));
+        	    	}
+        	    	con2.closeSql();
+        		} catch(Exception f) {
+        			f.printStackTrace();
+        		}
+        		
+        		
+        		for(int i : materialBatchIDs) {
+        			dropDownMaterialBatch.addItem(i);
+        		}
+        		
+        		matPanel.add(dropDownMaterialBatch);
+        		// Get text from JTextField
             	String productBatchNumber = dropDownProductBatch.getSelectedItem().toString();
             	
         		//String productBatchNumber = productBatchInput.getText();
@@ -245,7 +245,11 @@ public class TerminalGUI extends JPanel {
 		
 		add(scaPanel);   	
 	}
-
+	public String getMaterialBatchId () {
+		String MaterialBatchId = dropDownProductBatch.getSelectedItem().toString();
+		return MaterialBatchId;
+		
+	}
 	
 	private void TerminalRead() throws Exception {
 		String productBatchNumber = dropDownProductBatch.getSelectedItem().toString();

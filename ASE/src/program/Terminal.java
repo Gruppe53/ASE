@@ -14,6 +14,7 @@ import databaseAccess.*;
 
 public class Terminal implements ITerminal {
 	
+	private TerminalGUI mb_id;
 	private GuiLogin oprIdDatabase;
 	private int okcount = 0;
 	private ITerminalConnection con;
@@ -87,7 +88,7 @@ public class Terminal implements ITerminal {
 			nettoTemp = getCurrentWeight();
 			dbAccess = new DBAccess("72.13.93.206", 3307, "gruppe55", "gruppe55", "55gruppe");
 			try {
-				dbAccess.doSqlUpdate("INSERT INTO pbcomponent VALUES('" + productBatchNumber + "', '" + mb_id +"', '" + nettoTemp + "', '" + taraTemp + "', '" + oprIdDatabase.getUserId() + "')");
+				dbAccess.doSqlUpdate("INSERT INTO pbcomponent VALUES('" + productBatchNumber + "', '" + mb_id.getMaterialBatchId() +"', '" + nettoTemp + "', '" + taraTemp + "', '" + oprIdDatabase.getUserId() + "')");
 			} catch (DALException e) {
 				e.printStackTrace();
 			}
