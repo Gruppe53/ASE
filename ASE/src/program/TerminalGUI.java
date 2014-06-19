@@ -252,39 +252,71 @@ public class TerminalGUI extends JPanel {
 			
 		//makes sure that it can only begin weighing if nothings on the scale
 		if(buttonPressedCount == 0 && currentWeight <= 50) {
+			textAreaConsole.append("[" + getDate() + "]\t" + "Du kan nu begynde din afvejning. Tryk ok." + "\n");
 			TerminalOkWeight.setEnabled(true);
 			TerminalRead.setEnabled(false);
 			buttonPressedCount++;
 		}
 			//second time you press
 			if(buttonPressedCount == 1){
+				textAreaConsole.append("[" + getDate() + "]\t" + "Dette er den tarerede vægt. Tryk ok." + "\n");
 				TerminalOkWeight.setEnabled(true);
 				TerminalRead.setEnabled(false);
 				buttonPressedCount++;
 			}
 				if(buttonPressedCount > 1 && terminal.tolerableWeight(productBatchNumber)) {
+					textAreaConsole.append("[" + getDate() + "]\t" + "Du er inden for den tolererede vægt. Tryk ok." + "\n");
 					TerminalOkWeight.setEnabled(true);
 					TerminalRead.setEnabled(false);	
 					buttonPressedCount++;
 				}
 				
 		else {
-			textAreaConsole.setText("[" + getDate() + "]\t rengør vægt eller fjern evt. beholdere på vægten og tryk READ igen");
-			TerminalOkWeight.setEnabled(false);
+			if(buttonPressedCount > 1 && !(terminal.tolerableWeight(productBatchNumber))){
+				textAreaConsole.append("[" + getDate() + "]\t" + "Du er ikke inden for den ønskede mængde, tilføj eller fjern råvaren fra beholderen, kom inden for den ønskede tolerence mængde og tryk READ igen." + "\n");
+			}
+			textAreaConsole.setText("[" + getDate() + "]\t rengør vægt eller fjern evt. beholdere på vægten og tryk READ igen.");
 		}
 	}
 	
 	private void TerminalOkMaterialBatch() throws Exception {
 		textAreaConsole.append("[" + getDate() + "]\n Råvare num.: " + terminal.terminalOkGetMaterialId() + "\n Råvare navn: " + terminal.terminalOkGetMaterialName() + "\n");
-		TerminalOkWeight.setEnabled(false);
+		dropDownMaterialBatch.setEnabled(false);
+		TerminalOkMaterialBatch.setEnabled(false);
 		TerminalRead.setEnabled(true);
 	}
 	
 	private void TerminalOkWeight() throws Exception {
 		String productBatchNumber = dropDownProductBatch.getSelectedItem().toString();
 		textAreaConsole.append("[" + getDate() + "]\t" + terminal.terminalOkWeight(productBatchNumber) + "\n");
+		DBAccess con = new DBAccess();
+		
+		ResultSet rsi = con.doSqlQuery("SELECT COUNT(*) FROM precomponent WHERE pre_id = prescriptionNumber");
+		ResultSet rsj = con.doSqlQuery("SELECT COUNT(*) FROM pbcomponent WHERE pb_id = productbatchNumber");
+		
+		int i = rsi.getInt("COUNT(*)");
+		int j = rsj.getInt("COUNT(*)");
+		
+		if(buttonPressedCount > 1 && i==j ){
+			con.doSqlUpdate(query);
+			TerminalOkWeight.setEnabled(false);
+			TerminalRead.setEnabled(false);
+			// TODO afvejning er færdig her - alt skal nulstilles
+			
+		}
+		else
+			if(buttonPressedCount > 1){
+				TerminalOkWeight.setEnabled(false);
+				TerminalRead.setEnabled(false);
+				dropDownMaterialBatch.removeAll();
+				dropDownMaterialBatch.add(comp);
+				dropDownMaterial
+			}
+		else{
 		TerminalOkWeight.setEnabled(false);
 		TerminalRead.setEnabled(true);
+		}
+		con.closeSql();
 	}
 	
 	private void TerminalOkProductBatch(String productBatchNumber) throws Exception {
