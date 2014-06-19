@@ -36,7 +36,7 @@ public class TerminalGUI extends JPanel {
 	private JLabel materialBatch;
 	
 	private JComboBox<Integer> dropDownProductBatch;
-	private JComboBox<Integer> dropDownMaterialBatch;
+	private JComboBox<String> dropDownMaterialBatch;
 	
 	//instances used
 	int buttonPressedCount = 0;
@@ -205,37 +205,31 @@ public class TerminalGUI extends JPanel {
 		
 		TerminalOkProductBatch.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	
-            	ArrayList<Integer> materialBatchIDs = new ArrayList<Integer>();
         	 	DBAccess con2 = new DBAccess();
         		
-        		dropDownMaterialBatch = new JComboBox<Integer>();
+        		dropDownMaterialBatch = new JComboBox<String>();
+        		
         		ResultSet rs = null;
         		try {
-        			rs = con2.doSqlQuery("SELECT mb_id, m_name FROM matbatch NATURAL JOIN materials NATURAL JOIN precomponent WHERE pre_id = " + terminal.terminalOkGetPrescription(dropDownProductBatch.getSelectedItem().toString()) + " AND (amount >= netto) AND m_id NOT IN (SELECT m_id FROM pbcomponent NATURAL JOIN matbatch WHERE pb_id = "+ dropDownProductBatch.getSelectedItem().toString() + ")");
+        			rs = con2.doSqlQuery("SELECT mb_id, m_name, amount FROM matbatch NATURAL JOIN materials NATURAL JOIN precomponent WHERE pre_id = " + terminal.terminalOkGetPrescription(dropDownProductBatch.getSelectedItem().toString()) + " AND amount >= netto AND m_id NOT IN (SELECT m_id FROM pbcomponent NATURAL JOIN matbatch WHERE pb_id = "+ dropDownProductBatch.getSelectedItem().toString() + ")");
         			
-        	    	while( rs.next()) {
-        	    		materialBatchIDs.add(rs.getInt("mb_id"));
+        	    	while(rs.next()) {
+        	    		dropDownMaterialBatch.addItem("["+rs.getInt("mb_id")+"] " + rs.getString("m_name") + " ("+rs.getDouble("amount")+" g)");
         	    	}
         	    	con2.closeSql();
         		} catch(Exception f) {
         			f.printStackTrace();
         		}
         		
-        		
-        		for(int i : materialBatchIDs) {
-        			dropDownMaterialBatch.addItem(i);
-        		}
-        		
+        		matPanel.removeAll();
         		matPanel.add(dropDownMaterialBatch);
-        		// Get text from JTextField
+        		
             	String productBatchNumber = dropDownProductBatch.getSelectedItem().toString();
             	
-        		//String productBatchNumber = productBatchInput.getText();
-        		//returns Prescription
-        		//returns materialId and Name
                 try {
 					TerminalOkProductBatch(productBatchNumber);
+					TerminalOkProductBatch.setEnabled(false);
+					dropDownProductBatch.setEnabled(false);
 				} catch (Exception f) {
 					f.printStackTrace();
 				}
@@ -244,7 +238,7 @@ public class TerminalGUI extends JPanel {
 		
 		TerminalOkMaterialBatch.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	
+            	//TODO
             }
 		});
 		
@@ -302,11 +296,14 @@ public class TerminalGUI extends JPanel {
 	}
 	
 	private void TerminalOkProductBatch(String productBatchNumber) throws Exception {
-		if(terminal.terminalOkGetPrescription(productBatchNumber)!=null){	
-		textAreaConsole.append("[" + getDate() + "]\n Recept num.: " + terminal.terminalOkGetPrescription(productBatchNumber) + "\n\n");
-		textAreaPrescription.setText(terminal.terminalOkGetPrescription(productBatchNumber));
+		String togp = terminal.terminalOkGetPrescription(productBatchNumber);
+		
+		if(togp!=null){	
+			textAreaConsole.append("[" + getDate() + "]\t Recept num.: " + togp + "\n");
+			textAreaPrescription.setText(togp);
 		}
-		TerminalOkMaterialBatch.setEnabled (true);
+		
+		TerminalOkMaterialBatch.setEnabled(true);
 	}
 	private String getDate() {
 		return new SimpleDateFormat("HH:mm:ss").format(new Date());
