@@ -125,7 +125,7 @@ public class GuiLogin extends JComponent {
 		int databaseUsername = -1;
 		String databasePassword = "";
 		
-		DBAccess con = new DBAccess("72.13.93.206", 3307, "gruppe55", "gruppe55", "55gruppe");
+		DBAccess con = new DBAccess();
 		// Syntaksen er: DBAccess("host", port, "database", "username", "password") - port er en int, resten string
 		
 		int oprNr = -1;

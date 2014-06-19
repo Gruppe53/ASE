@@ -86,7 +86,7 @@ public class Terminal implements ITerminal {
 			if(tolerableWeight(productBatchNumber))
 			okcount++;
 			nettoTemp = getCurrentWeight();
-			dbAccess = new DBAccess("72.13.93.206", 3307, "gruppe55", "gruppe55", "55gruppe");
+			dbAccess = new DBAccess();
 			try {
 				dbAccess.doSqlUpdate("INSERT INTO pbcomponent VALUES('" + productBatchNumber + "', '" + mb_id.getMaterialBatchId() +"', '" + nettoTemp + "', '" + taraTemp + "', '" + oprIdDatabase.getUserId() + "')");
 			} catch (DALException e) {
@@ -170,7 +170,7 @@ public class Terminal implements ITerminal {
 	private String getPrescription(String productBatchNumber) throws Exception {
 		ResultSet prescriptionNumber = null;
 		String prescription = null;
-		dbAccess = new DBAccess("72.13.93.206", 3307, "gruppe55", "gruppe55", "55gruppe");
+		dbAccess = new DBAccess();
 		try {
 			prescriptionNumber = dbAccess.doSqlQuery("SELECT pre_id FROM productbatch WHERE pb_id = '" + productBatchNumber + "'");
 			if(prescriptionNumber.next()) {
@@ -199,7 +199,7 @@ public class Terminal implements ITerminal {
 		String materialIdNumber = mb_id.getMaterialBatchId(); 
 		ResultSet materialIdResultSet = null;
 		String materialId = null;
-		dbAccess = new DBAccess("72.13.93.206", 3307, "gruppe55", "gruppe55", "55gruppe");
+		dbAccess = new DBAccess();
 		try{
 			materialIdResultSet = dbAccess.doSqlQuery("SELECT m_id FROM matBatch WHERE mb_id = '" + materialIdNumber + "'");
 			if(materialIdResultSet.next()){
@@ -230,7 +230,7 @@ public class Terminal implements ITerminal {
 		String materialId = getMaterialId();
 		ResultSet materialNameResultSet = null;
 		String materialName = null;
-		dbAccess = new DBAccess("72.13.93.206", 3307, "gruppe55", "gruppe55", "55gruppe");
+		dbAccess = new DBAccess();
 		try{
 			materialNameResultSet = dbAccess.doSqlQuery("SELECT m_name FROM materials WHERE m_id = '" + materialId + "'");
 			if(materialNameResultSet.next()){
@@ -260,7 +260,7 @@ public class Terminal implements ITerminal {
 		String prescriptionId = getPrescription(productBatchNumber);
 		ResultSet nettoResultSet = null;
 		double nettoDouble = 0;
-		dbAccess = new DBAccess("72.13.93.206", 3307, "gruppe55", "gruppe55", "55gruppe");
+		dbAccess = new DBAccess();
 		try{
 			nettoResultSet = dbAccess.doSqlQuery("SELECT netto FROM precomponent WHERE pre_id = '" + prescriptionId + "' AND m_id = '" + materialId + "'");
 			if(nettoResultSet.next()){
@@ -290,7 +290,7 @@ public class Terminal implements ITerminal {
 		String prescriptionId = getPrescription(productBatchNumber);
 		ResultSet toleranceResultSet = null;
 		double tolerancedouble = 0;
-		dbAccess = new DBAccess("72.13.93.206", 3307, "gruppe55", "gruppe55", "55gruppe");
+		dbAccess = new DBAccess();
 		try{
 			toleranceResultSet = dbAccess.doSqlQuery("SELECT tolerance FROM precomponent WHERE pre_id = '" + prescriptionId + "' AND m_id = '" + materialId + "'");
 			if(toleranceResultSet.next()){

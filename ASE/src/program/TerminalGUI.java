@@ -120,7 +120,7 @@ public class TerminalGUI extends JPanel {
 		
 		ArrayList<Integer> productBatchIDs = new ArrayList<Integer>();
 		
-		DBAccess con = new DBAccess("72.13.93.206", 3307, "gruppe55", "gruppe55", "55gruppe");
+		DBAccess con = new DBAccess();
 						
 		dropDownProductBatch = new JComboBox<Integer>();
 		try {
@@ -208,7 +208,7 @@ public class TerminalGUI extends JPanel {
             public void actionPerformed(ActionEvent e) {
             	
             	ArrayList<Integer> materialBatchIDs = new ArrayList<Integer>();
-        	 	DBAccess con2 = new DBAccess("72.13.93.206", 3307, "gruppe55", "gruppe55", "55gruppe");
+        	 	DBAccess con2 = new DBAccess();
         		
         		dropDownMaterialBatch = new JComboBox<Integer>();
         		ResultSet rs = null;
