@@ -46,6 +46,7 @@ public class TerminalGUI extends JPanel {
 	private JButton TerminalRead = new JButton("Read");
 	private JButton TerminalOkWeight = new JButton("Ok");
 	private JButton TerminalOkProductBatch = new JButton("Ok");
+	private JButton TerminalOkMaterialBatch= new JButton("Ok");
 	
 
 	// Printout
@@ -124,7 +125,7 @@ public class TerminalGUI extends JPanel {
 						
 		dropDownProductBatch = new JComboBox<Integer>();
 		try {
-			ResultSet rs = con.doSqlQuery("SELECT pb_id FROM productbatch");
+			ResultSet rs = con.doSqlQuery("SELECT * FROM productbatch");
 			
 	    	while(rs.next()) {
 	    		productBatchIDs.add(rs.getInt("pb_id"));
@@ -165,6 +166,8 @@ public class TerminalGUI extends JPanel {
 		textAreaMaterialBatch.setWrapStyleWord(true);
 		textAreaMaterialBatch.setEditable(false);*/
 		
+		okpPanel.add(TerminalOkMaterialBatch);
+		TerminalOkMaterialBatch.setEnabled (true);
 		materialBatch = new JLabel("Materialbatch");
 		matPanel.add(materialBatch);
 		
@@ -174,10 +177,10 @@ public class TerminalGUI extends JPanel {
 		
 		dropDownMaterialBatch = new JComboBox<Integer>();
 		try {
-			ResultSet rs = con.doSqlQuery("SELECT mb_id FROM pbcomponent WHERE netto = '" + 0 + "'");
+			ResultSet rs = con.doSqlQuery("SELECT mb_id, m_name FROM matbatch NATURAL JOIN materials NATURAL JOIN precomponent WHERE pre_id = " + rs.getInt("pre_id") + "AND amount >= netto AND m_id NOT IN (SELECT m_id FROM pbcomponent NATURAL JOIN matbatch WHERE pb_id = productbatchNumber)");
 			
 	    	while( rs.next()) {
-	    		materialBatchIDs.add(rs.getInt("mb_id"));
+	    		materialBatchIDs.add(rs.getInt("mb_id, m_name"));
 	    	}
 	    	con.closeSql();
 		} catch(Exception e) {
@@ -265,12 +268,12 @@ public class TerminalGUI extends JPanel {
 			}
 				if(buttonPressedCount > 1 && terminal.tolerableWeight(productBatchNumber)) {
 					TerminalOkWeight.setEnabled(true);
-					TerminalRead.setEnabled(false);
+					TerminalRead.setEnabled(false);	
 					buttonPressedCount++;
 				}
 				
 		else {
-			textAreaConsole.append("[" + getDate() + "]\t rengør vægt eller fjern evt. beholdere på vægten og tryk READ igen");
+			textAreaConsole.setText("[" + getDate() + "]\t rengør vægt eller fjern evt. beholdere på vægten og tryk READ igen");
 			TerminalOkWeight.setEnabled(false);
 		}
 	}
