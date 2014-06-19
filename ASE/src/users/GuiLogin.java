@@ -114,7 +114,13 @@ public class GuiLogin extends JComponent {
             }
         });
 	}
-			
+	
+	public int getUserId() {
+		int userId = 0;
+			userId = Integer.parseInt(oprId.getText());
+		return userId;
+	}
+	
 	private void userLogin() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		int databaseUsername = -1;
 		String databasePassword = "";
