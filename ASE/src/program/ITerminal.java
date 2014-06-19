@@ -11,7 +11,7 @@ public interface ITerminal {
 	String terminalOkWeight(String productBatchNumber) throws Exception;
 	String terminalOkGetPrescription(String productBatchNumber) throws Exception;
 	String terminalOkGetMaterialId() throws Exception;
-	String terminalOkGetMaterialName(String productBatchNumber) throws Exception;
+	String terminalOkGetMaterialName() throws Exception;
 	String terminalDisplay();
 	String getConnection();
 	double getCurrentWeight();

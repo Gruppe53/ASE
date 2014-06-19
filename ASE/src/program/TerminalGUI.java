@@ -122,7 +122,7 @@ public class TerminalGUI extends JPanel {
 						
 		dropDownProductBatch = new JComboBox<Integer>();
 		try {
-			ResultSet rs = con.doSqlQuery("SELECT * FROM productbatch");
+			ResultSet rs = con.doSqlQuery("SELECT * FROM productbatch WHERE status = 0 OR 1");
 			
 	    	while(rs.next()) {
 	    		productBatchIDs.add(rs.getInt("pb_id"));
@@ -226,7 +226,11 @@ public class TerminalGUI extends JPanel {
 		
 		TerminalOkMaterialBatch.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	//TODO
+            	try {
+					TerminalOkMaterialBatch();
+				} catch (Exception f) {
+					f.printStackTrace();
+				}
             }
 		});
 		
@@ -270,8 +274,8 @@ public class TerminalGUI extends JPanel {
 		}
 	}
 	
-	private void TerminalOkMaterial() throws Exception {
-		textAreaConsole.append("[" + getDate() + "]\t" + terminal.terminalOkGetMaterialId() + "\n");
+	private void TerminalOkMaterialBatch() throws Exception {
+		textAreaConsole.append("[" + getDate() + "]\n Råvare num.: " + terminal.terminalOkGetMaterialId() + "\n Råvare navn: " + terminal.terminalOkGetMaterialName() + "\n");
 		TerminalOkWeight.setEnabled(false);
 		TerminalRead.setEnabled(true);
 	}

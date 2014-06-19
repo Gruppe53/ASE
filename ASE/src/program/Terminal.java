@@ -118,8 +118,8 @@ public class Terminal implements ITerminal {
 	}
 	
 	@Override
-	public String terminalOkGetMaterialName(String productBatchNumber) throws Exception {
-		return getMaterialName(productBatchNumber);
+	public String terminalOkGetMaterialName() throws Exception {
+		return getMaterialName();
 	}
 	
 	@Override
@@ -226,7 +226,7 @@ public class Terminal implements ITerminal {
 	}
 
 	
-	private String getMaterialName(String productBatchNumber) throws Exception{
+	private String getMaterialName() throws Exception{
 		String materialId = getMaterialId();
 		ResultSet materialNameResultSet = null;
 		String materialName = null;
