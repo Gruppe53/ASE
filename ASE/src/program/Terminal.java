@@ -75,7 +75,7 @@ public class Terminal implements ITerminal {
 			dbAccess = new DBAccess("72.13.93.206", 3307, "gruppe55", "gruppe55", "55gruppe");
 
 			try {
-				dbAccess.doSqlUpdate("INSERT INTO" + getDigit("S"));
+				dbAccess.doSqlUpdate("UPDATE " + getDigit("S"));
 			} catch (DALException e) {
 				e.printStackTrace();
 			}
@@ -169,8 +169,8 @@ public class Terminal implements ITerminal {
 	
 	@Override
 	public double getCurrentWeight() {
-		String str = "S";
-		double weight = Double.parseDouble(getDigit(str));
+		String res = con.getTerminalResponse("S");
+		double weight = Double.parseDouble(getDigit(res));
 		return weight;
 	}
 

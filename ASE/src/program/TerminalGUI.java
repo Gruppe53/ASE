@@ -187,7 +187,7 @@ public class TerminalGUI extends JPanel {
 			dropDownMaterialBatch.addItem(i);
 		}
 		
-		productPanel.add(dropDownMaterialBatch);
+		matPanel.add(dropDownMaterialBatch);
 		*/	
 		matPanel.setBackground(Color.white);
 	
@@ -242,7 +242,7 @@ public class TerminalGUI extends JPanel {
 
 	
 	private void TerminalRead() throws Exception {
-		String productBatchNumber = productBatchInput.getText();
+		String productBatchNumber = productBatch.getText();
 		double currentWeight = terminal.getCurrentWeight();
 		textAreaConsole.append("[" + getDate() + "]\t" + terminal.terminalRead() + "\n");
 		if(buttonPressedCount == 3) {
