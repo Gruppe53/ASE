@@ -193,6 +193,7 @@ public class TerminalGUI extends JPanel {
 		}
 		
 		matPanel.add(dropDownMaterialBatch);
+		dropDownMaterialBatch.enable(false);
 		
 		matPanel.setBackground(Color.white);
 	
