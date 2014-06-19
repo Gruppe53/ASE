@@ -28,13 +28,14 @@ public class TerminalGUI extends JPanel {
 			
 	private Dimension innerSize = new Dimension(500, 100);
 	
-	private JScrollPane txtPanel;
+	private JScrollPane txtPanel = new JScrollPane();
 	private JLabel productBatch = new JLabel("Produktbatch: ");
-	private JScrollPane recept;
+	private JScrollPane recept = new JScrollPane();
+	private JLabel receptLabel = new JLabel ("Receptnummer: ");
 	private JLabel materialBatch = new JLabel ("Råvarebatch: ");
 	
-	private JComboBox<Integer> dropDownProductBatch;
-	private JComboBox<String> dropDownMaterialBatch;
+	private JComboBox<Integer> dropDownProductBatch = new JComboBox<Integer>();
+	private JComboBox<String> dropDownMaterialBatch = new JComboBox<String>();
 	
 	//instances used
 	int buttonPressedCount = 0;
@@ -63,20 +64,16 @@ public class TerminalGUI extends JPanel {
 
 		TerminalOkWeight.setEnabled(false);
 
-
-
-
-		
-		
-	
 		// Productbatch panel
 		productBatchPanel.setPreferredSize(innerSize);
 		productBatchPanel.setBackground(Color.decode("#ffffff"));
 		productBatchPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.decode("#d5dfe5")), "Produktbatch"));
 		
+		
 		productBatchPanel.add(productBatch);
 		productBatchPanel.add(dropDownProductBatch);
 		productBatchPanel.add(TerminalOkProductBatch, "wrap");
+		productBatchPanel.add(receptLabel);
 		productBatchPanel.add(recept);
 	
 		add(productBatchPanel, "wrap");
