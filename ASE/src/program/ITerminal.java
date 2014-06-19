@@ -10,7 +10,7 @@ public interface ITerminal {
 	String terminalMessage(String msg);
 	String terminalOkWeight(String productBatchNumber) throws Exception;
 	String terminalOkGetPrescription(String productBatchNumber) throws Exception;
-	String terminalOkGetMaterialId(String productBatchNumber) throws Exception;
+	String terminalOkGetMaterialId() throws Exception;
 	String terminalOkGetMaterialName(String productBatchNumber) throws Exception;
 	String terminalDisplay();
 	String getConnection();

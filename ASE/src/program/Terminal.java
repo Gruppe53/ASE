@@ -113,8 +113,8 @@ public class Terminal implements ITerminal {
 	}
 	
 	@Override
-	public String terminalOkGetMaterialId(String productBatchNumber) throws Exception {
-		return getMaterialId(productBatchNumber);
+	public String terminalOkGetMaterialId() throws Exception {
+		return getMaterialId();
 	}
 	
 	@Override
@@ -195,13 +195,13 @@ public class Terminal implements ITerminal {
 		return prescription;
 	}
 	
-	private String getMaterialId(String productBatchNumber) throws Exception{
-		String prescriptionId = getPrescription(productBatchNumber);
+	private String getMaterialId() throws Exception{
+		String materialIdNumber = mb_id.getMaterialBatchId(); 
 		ResultSet materialIdResultSet = null;
 		String materialId = null;
 		dbAccess = new DBAccess("72.13.93.206", 3307, "gruppe55", "gruppe55", "55gruppe");
 		try{
-			materialIdResultSet = dbAccess.doSqlQuery("SELECT m_id FROM precomponent WHERE pre_id = '" + prescriptionId + "'");
+			materialIdResultSet = dbAccess.doSqlQuery("SELECT m_id FROM matBatch WHERE mb_id = '" + materialIdNumber + "'");
 			if(materialIdResultSet.next()){
 				materialId = materialIdResultSet.getString("m_id");
 				
@@ -227,7 +227,7 @@ public class Terminal implements ITerminal {
 
 	
 	private String getMaterialName(String productBatchNumber) throws Exception{
-		String materialId = getMaterialId(productBatchNumber);
+		String materialId = getMaterialId();
 		ResultSet materialNameResultSet = null;
 		String materialName = null;
 		dbAccess = new DBAccess("72.13.93.206", 3307, "gruppe55", "gruppe55", "55gruppe");
@@ -256,7 +256,7 @@ public class Terminal implements ITerminal {
 	}
 	
 	private double getNetto(String productBatchNumber) throws Exception{
-		String materialId = getMaterialId(productBatchNumber);
+		String materialId = getMaterialId();
 		String prescriptionId = getPrescription(productBatchNumber);
 		ResultSet nettoResultSet = null;
 		double nettoDouble = 0;
@@ -286,7 +286,7 @@ public class Terminal implements ITerminal {
 	}
 
 	private double getTolerance(String productBatchNumber) throws Exception{
-		String materialId = getMaterialId(productBatchNumber);
+		String materialId = getMaterialId();
 		String prescriptionId = getPrescription(productBatchNumber);
 		ResultSet toleranceResultSet = null;
 		double tolerancedouble = 0;

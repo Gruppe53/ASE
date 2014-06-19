@@ -283,6 +283,12 @@ public class TerminalGUI extends JPanel {
 		}
 	}
 	
+	private void TerminalOkMaterial() throws Exception {
+		textAreaConsole.append("[" + getDate() + "]\t" + terminal.terminalOkGetMaterialId() + "\n");
+		TerminalOkWeight.setEnabled(false);
+		TerminalRead.setEnabled(true);
+	}
+	
 	private void TerminalOkWeight() throws Exception {
 		String productBatchNumber = dropDownProductBatch.getSelectedItem().toString();
 		textAreaConsole.append("[" + getDate() + "]\t" + terminal.terminalOkWeight(productBatchNumber) + "\n");
@@ -292,12 +298,8 @@ public class TerminalGUI extends JPanel {
 	
 	private void TerminalOkProductBatch(String productBatchNumber) throws Exception {
 		if(terminal.terminalOkGetPrescription(productBatchNumber)!=null){	
-		textAreaConsole.append("[" + getDate() + "]\n Recept num.: " + terminal.terminalOkGetPrescription(productBatchNumber) + 
-								"\n Råvare num.: " + terminal.terminalOkGetMaterialId(productBatchNumber) + 
-								"\n Råvare Navn: " + terminal.terminalOkGetMaterialName(productBatchNumber) + "\n\n");
+		textAreaConsole.append("[" + getDate() + "]\n Recept num.: " + terminal.terminalOkGetPrescription(productBatchNumber) + "\n\n");
 		textAreaPrescription.setText(terminal.terminalOkGetPrescription(productBatchNumber));
-		textAreaMaterialBatch.setText(terminal.terminalOkGetMaterialId(productBatchNumber)+ " " + terminal.terminalOkGetMaterialName(productBatchNumber));
-		TerminalRead.setEnabled(true);
 		}
 	}
 	private String getDate() {
