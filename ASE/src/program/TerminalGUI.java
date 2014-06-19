@@ -298,7 +298,7 @@ public class TerminalGUI extends JPanel {
 		int j = rsj.getInt("COUNT(*)");
 		
 		if(buttonPressedCount > 1 && i==j ){
-			con.doSqlUpdate(query);
+			con.doSqlUpdate("UPDATE productbatch SET status = '2' WHERE pb_id = productbatchnumber");
 			TerminalOkWeight.setEnabled(false);
 			TerminalRead.setEnabled(false);
 			// TODO afvejning er færdig her - alt skal nulstilles
@@ -311,6 +311,7 @@ public class TerminalGUI extends JPanel {
 				dropDownMaterialBatch.removeAll();
 				dropDownMaterialBatch.add(comp);
 				dropDownMaterial
+				//TODO denne råvarebatch er færdig - skift den.
 			}
 		else{
 		TerminalOkWeight.setEnabled(false);
