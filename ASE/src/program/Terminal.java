@@ -75,7 +75,7 @@ public class Terminal implements ITerminal {
 			dbAccess = new DBAccess("72.13.93.206", 3307, "gruppe55", "gruppe55", "55gruppe");
 
 			try {
-				dbAccess.doSqlUpdate("UPDATE " + getDigit("S"));
+				dbAccess.doSqlUpdate("UPDATE " + getDigit(con.getTerminalResponse("S")));
 			} catch (DALException e) {
 				e.printStackTrace();
 			}
@@ -96,7 +96,7 @@ public class Terminal implements ITerminal {
 			okcount++;
 			dbAccess = new DBAccess("72.13.93.206", 3307, "gruppe55", "gruppe55", "55gruppe");
 			try {
-				dbAccess.doSqlUpdate("ALTER TABLE" + getDigit("S"));
+				dbAccess.doSqlUpdate("ALTER TABLE" + getDigit(con.getTerminalResponse("S")));
 			} catch (DALException e) {
 				e.printStackTrace();
 			}
