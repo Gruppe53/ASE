@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 
 import databaseAccess.DBAccess;
 import net.miginfocom.swing.MigLayout;
@@ -20,20 +21,17 @@ public class TerminalGUI extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private ITerminal terminal;
 	
-	private JPanel scaPanel = new JPanel(new MigLayout());
-	private JPanel proPanel = new JPanel();
-	private JPanel stsPanel = new JPanel();
-	private JPanel cmdPanel = new JPanel();
-	private JPanel matPanel = new JPanel();
-	private JPanel repPanel = new JPanel();
-	private JPanel okpPanel = new JPanel();
-	private JPanel leftPanel = new JPanel();
-	private JPanel productPanel = new JPanel();
+	private JPanel productBatchPanel = new JPanel (new MigLayout());
+	private JPanel materialBatchPanel = new JPanel();
+	private JPanel consolePanel = new JPanel();
+	private JPanel commandsPanel = new JPanel();
 			
+	private Dimension innerSize = new Dimension(500, 100);
+	
 	private JScrollPane txtPanel;
-	private JLabel productBatch;
+	private JLabel productBatch = new JLabel("Produktbatch: ");
 	private JScrollPane recept;
-	private JLabel materialBatch;
+	private JLabel materialBatch = new JLabel ("Råvarebatch: ");
 	
 	private JComboBox<Integer> dropDownProductBatch;
 	private JComboBox<String> dropDownMaterialBatch;
@@ -57,64 +55,71 @@ public class TerminalGUI extends JPanel {
 		
 		// General setup
 		setLayout(new MigLayout());
+		setPreferredSize(new Dimension(500, 400));
+		setOpaque(true);
 		
-		scaPanel.setBorder(BorderFactory.createBevelBorder(1, Color.decode("#ffffff"), Color.decode("#898c95"), Color.decode("#898c95"), Color.decode("#f0f0f0")));
-		scaPanel.setBackground(Color.white);
-		
-		
-		// Scale command buttons
-		cmdPanel.setPreferredSize(new Dimension(300, 60));
-		cmdPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.decode("#d5dfe5")), "Terminal commands"));
-		cmdPanel.setBackground(Color.white);
-		
-		//TODO husk at gøre dem false igen
+
 		TerminalRead.setEnabled(false);
 
 		TerminalOkWeight.setEnabled(false);
 
-		
-		cmdPanel.add(TerminalRead);
 
-		cmdPanel.add(TerminalOkWeight);
 
 
 		
 		
+	
+		// Productbatch panel
+		productBatchPanel.setPreferredSize(innerSize);
+		productBatchPanel.setBackground(Color.decode("#ffffff"));
+		productBatchPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.decode("#d5dfe5")), "Produktbatch"));
+		
+		productBatchPanel.add(productBatch);
+		productBatchPanel.add(dropDownProductBatch);
+		productBatchPanel.add(TerminalOkProductBatch, "wrap");
+		productBatchPanel.add(recept);
+	
+		add(productBatchPanel, "wrap");
+		
+		// Material Batch panel settings
+		materialBatchPanel.setPreferredSize(innerSize);
+		materialBatchPanel.setBackground(Color.decode("#ffffff"));
+		materialBatchPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.decode("#d5dfe5")), "Råvarebatch"));
+		
+		materialBatchPanel.add(materialBatch);
+		materialBatchPanel.add(dropDownMaterialBatch);
+		materialBatchPanel.add(TerminalOkMaterialBatch);
+		
+		add(materialBatchPanel, "wrap");
+		
+		// Commands panel settings
+		commandsPanel.setPreferredSize(innerSize);
+		commandsPanel.setBackground(Color.decode("#ffffff"));
+		commandsPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.decode("#d5dfe5")), "Vægtkommandoer"));
+		
+		commandsPanel.add(TerminalRead);
+		commandsPanel.add(TerminalOkWeight);
+		
+		add(commandsPanel, "wrap");
+
+
 		// Console panel
+		consolePanel.setPreferredSize(innerSize);
+		consolePanel.setBackground(Color.decode("#ffffff"));
+		consolePanel.setBorder(new EmptyBorder(0,0,0,0));
+		
 		txtPanel = new JScrollPane(textAreaConsole);
-		txtPanel.setBackground(Color.white);
+		txtPanel.setBackground(Color.decode("#ffffff"));
 		txtPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.decode("#d5dfe5")), "Console"));
 		txtPanel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		txtPanel.setPreferredSize(new Dimension(400, 150));
+		txtPanel.setPreferredSize(innerSize);
 		
 		textAreaConsole.setLineWrap(true);
 		textAreaConsole.setWrapStyleWord(true);
 		textAreaConsole.setEditable(false);
+		textAreaConsole.append("[" + getDate() + "]\tType an IP to connect.\n");
 		
-		// Productbatch panel
-		proPanel.add(leftPanel);
-		proPanel.add(okpPanel);
-		proPanel.setBackground(Color.white);
-		proPanel.setPreferredSize(new Dimension (200,200));
-		
-		// The small panels in productbatch panel
-		leftPanel.setPreferredSize(new Dimension (200,200));
-		leftPanel.setBackground(Color.white);
-		
-		leftPanel.add(productPanel);
-		leftPanel.add(repPanel);
-		leftPanel.add(matPanel);
-
-		okpPanel.setPreferredSize(new Dimension (100,175));
-		okpPanel.setBackground(Color.white);
-		
-		okpPanel.add(TerminalOkProductBatch);
-		TerminalOkProductBatch.setEnabled (true);
-		
-		productBatch = new JLabel("Produktbatch");
-
-		productPanel.add(productBatch);
-
+		add(txtPanel);
 		
 		ArrayList<Integer> productBatchIDs = new ArrayList<Integer>();
 		
@@ -138,9 +143,7 @@ public class TerminalGUI extends JPanel {
 		
 
 		}
-		productPanel.add(dropDownProductBatch);
 		
-		productPanel.setBackground(Color.white);
 		
 		recept = new JScrollPane(textAreaPrescription);
 		recept.setBackground(Color.white);
@@ -150,22 +153,6 @@ public class TerminalGUI extends JPanel {
 		textAreaPrescription.setLineWrap(true);
 		textAreaPrescription.setWrapStyleWord(true);
 		textAreaPrescription.setEditable(false);
-		
-		repPanel.add(recept);
-		repPanel.setBackground(Color.white);
-		
-		okpPanel.add(TerminalOkMaterialBatch);
-		materialBatch = new JLabel("Råvarebatch");
-		matPanel.add(materialBatch);
-		
-		matPanel.setBackground(Color.white);
-		matPanel.setPreferredSize(new Dimension (100, 100));
-	
-		// Add to Main panel
-		scaPanel.add(proPanel);
-		scaPanel.add(stsPanel, "wrap");
-		scaPanel.add(cmdPanel, "span 2 1, wrap");
-		scaPanel.add(txtPanel, "span 2 1");
 		
 		TerminalRead.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -209,8 +196,7 @@ public class TerminalGUI extends JPanel {
         			f.printStackTrace();
         		}
         		
-        		matPanel.removeAll();
-        		matPanel.add(dropDownMaterialBatch);
+
         		
             	String productBatchNumber = dropDownProductBatch.getSelectedItem().toString();
             	
@@ -237,7 +223,7 @@ public class TerminalGUI extends JPanel {
             }
 		});
 		
-		add(scaPanel);   	
+
 	}
 	public String getMaterialBatchId () {
 		String MaterialBatchId = dropDownProductBatch.getSelectedItem().toString();
@@ -312,8 +298,8 @@ public class TerminalGUI extends JPanel {
 				TerminalOkWeight.setEnabled(false);
 				TerminalRead.setEnabled(false);
 				dropDownMaterialBatch.removeAll();
-				dropDownMaterialBatch.add(comp);
-				dropDownMaterial
+				//dropDownMaterialBatch.add(comp);
+				//dropDownMaterial
 				//TODO denne råvarebatch er færdig - skift den.
 			}
 		else{
