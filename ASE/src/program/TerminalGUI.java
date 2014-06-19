@@ -50,7 +50,6 @@ public class TerminalGUI extends JPanel {
 
 	// Printout
 	private JTextArea textAreaConsole = new JTextArea();
-	private JTextArea textAreaMaterialBatch = new JTextArea();
 	private JTextArea textAreaPrescription = new JTextArea();
 
 	public TerminalGUI(ITerminal Terminal) {
@@ -67,6 +66,7 @@ public class TerminalGUI extends JPanel {
 		cmdPanel.setPreferredSize(new Dimension(300, 60));
 		cmdPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.decode("#d5dfe5")), "Terminal commands"));
 		cmdPanel.setBackground(Color.white);
+		
 		//TODO husk at gøre dem false igen
 		TerminalRead.setEnabled(false);
 
@@ -95,9 +95,10 @@ public class TerminalGUI extends JPanel {
 		proPanel.add(leftPanel);
 		proPanel.add(okpPanel);
 		proPanel.setBackground(Color.white);
+		proPanel.setPreferredSize(new Dimension (200,200));
 		
 		// The small panels in productbatch panel
-		leftPanel.setPreferredSize(new Dimension (200,175));
+		leftPanel.setPreferredSize(new Dimension (200,200));
 		leftPanel.setBackground(Color.white);
 		
 		leftPanel.add(productPanel);
@@ -111,12 +112,9 @@ public class TerminalGUI extends JPanel {
 		TerminalOkProductBatch.setEnabled (true);
 		
 		productBatch = new JLabel("Produktbatch");
-		//productBatchInput = new JTextField();
-		//productBatchInput.setPreferredSize(new Dimension (98,20));
-		
-		
+
 		productPanel.add(productBatch);
-		//productPanel.add(productBatchInput);
+
 		
 		ArrayList<Integer> productBatchIDs = new ArrayList<Integer>();
 		
@@ -156,22 +154,12 @@ public class TerminalGUI extends JPanel {
 		repPanel.add(recept);
 		repPanel.setBackground(Color.white);
 		
-		/*materialBatch = new JScrollPane(textAreaMaterialBatch);
-		materialBatch.setBackground(Color.white);
-		materialBatch.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.decode("#d5dfe5")),"Råvarebatch"));
-		materialBatch.setPreferredSize(new Dimension(200,50));
-		
-		textAreaMaterialBatch.setLineWrap(true);
-		textAreaMaterialBatch.setWrapStyleWord(true);
-		textAreaMaterialBatch.setEditable(false);*/
-		
 		okpPanel.add(TerminalOkMaterialBatch);
 		materialBatch = new JLabel("Råvarebatch");
 		matPanel.add(materialBatch);
 		
-		
-		
 		matPanel.setBackground(Color.white);
+		matPanel.setPreferredSize(new Dimension (100, 100));
 	
 		// Add to Main panel
 		scaPanel.add(proPanel);
