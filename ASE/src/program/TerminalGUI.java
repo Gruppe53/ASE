@@ -166,7 +166,6 @@ public class TerminalGUI extends JPanel {
 		textAreaMaterialBatch.setEditable(false);*/
 		
 		okpPanel.add(TerminalOkMaterialBatch);
-		TerminalOkMaterialBatch.setEnabled (true);
 		materialBatch = new JLabel("Råvarebatch");
 		matPanel.add(materialBatch);
 		
@@ -241,7 +240,13 @@ public class TerminalGUI extends JPanel {
 					f.printStackTrace();
 				}
             }
-        });
+		});
+		
+		TerminalOkMaterialBatch.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	
+            }
+		});
 		
 		add(scaPanel);   	
 	}
@@ -301,6 +306,7 @@ public class TerminalGUI extends JPanel {
 		textAreaConsole.append("[" + getDate() + "]\n Recept num.: " + terminal.terminalOkGetPrescription(productBatchNumber) + "\n\n");
 		textAreaPrescription.setText(terminal.terminalOkGetPrescription(productBatchNumber));
 		}
+		TerminalOkMaterialBatch.setEnabled (true);
 	}
 	private String getDate() {
 		return new SimpleDateFormat("HH:mm:ss").format(new Date());
