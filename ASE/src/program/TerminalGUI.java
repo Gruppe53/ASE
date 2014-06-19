@@ -33,11 +33,11 @@ public class TerminalGUI extends JPanel {
 	private JScrollPane txtPanel;
 	private JLabel productBatch;
 	private JScrollPane recept;
-	private JScrollPane materialBatch;
+	private JLabel materialBatch;
 	private JTextField productBatchInput;
 	
 	private JComboBox<Integer> dropDownProductBatch;
-	//private JComboBox<Integer> dropDownMaterialBatch;
+	private JComboBox<Integer> dropDownMaterialBatch;
 	
 	//instances used
 	int buttonPressedCount = 0;
@@ -111,8 +111,8 @@ public class TerminalGUI extends JPanel {
 		TerminalOkProductBatch.setEnabled (true);
 		
 		productBatch = new JLabel("Produktbatch");
-		productBatchInput = new JTextField();
-		productBatchInput.setPreferredSize(new Dimension (98,20));
+		//productBatchInput = new JTextField();
+		//productBatchInput.setPreferredSize(new Dimension (98,20));
 		
 		
 		productPanel.add(productBatch);
@@ -129,7 +129,7 @@ public class TerminalGUI extends JPanel {
 	    	while(rs.next()) {
 	    		productBatchIDs.add(rs.getInt("pb_id"));
 	    	}
-	    	con.closeSql();
+	    	//con.closeSql();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -156,39 +156,41 @@ public class TerminalGUI extends JPanel {
 		repPanel.add(recept);
 		repPanel.setBackground(Color.white);
 		
-		materialBatch = new JScrollPane(textAreaMaterialBatch);
+		/*materialBatch = new JScrollPane(textAreaMaterialBatch);
 		materialBatch.setBackground(Color.white);
 		materialBatch.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.decode("#d5dfe5")),"Råvarebatch"));
 		materialBatch.setPreferredSize(new Dimension(200,50));
 		
 		textAreaMaterialBatch.setLineWrap(true);
 		textAreaMaterialBatch.setWrapStyleWord(true);
-		textAreaMaterialBatch.setEditable(false);
+		textAreaMaterialBatch.setEditable(false);*/
 		
+		materialBatch = new JLabel("Materialbatch");
 		matPanel.add(materialBatch);
-		/*
-	ArrayList<Integer> materialBatchIDs = new ArrayList<Integer>();
 		
-	 	con = new DBAccess("72.13.93.206", 3307, "gruppe55", "gruppe55", "55gruppe");
+		ArrayList<Integer> materialBatchIDs = new ArrayList<Integer>();
 		
+	 	//DBAccess con2 = new DBAccess("72.13.93.206", 3307, "gruppe55", "gruppe55", "55gruppe");
+		
+		dropDownMaterialBatch = new JComboBox<Integer>();
 		try {
-			ResultSet rs = con.doSqlQuery("SELECT mbId FROM pbcomponent WHERE netto = '" + 0 + "'");
+			ResultSet rs = con.doSqlQuery("SELECT mb_id FROM pbcomponent WHERE netto = '" + 0 + "'");
 			
 	    	while( rs.next()) {
-	    		materialBatchIDs.add(rs.getInt("pb_id"));
+	    		materialBatchIDs.add(rs.getInt("mb_id"));
 	    	}
+	    	con.closeSql();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-				
-		dropDownMaterialBatch = new JComboBox<Integer>();
 		
-		for(int i : productBatchIDs) {
+			
+		for(int i : materialBatchIDs) {
 			dropDownMaterialBatch.addItem(i);
 		}
 		
 		matPanel.add(dropDownMaterialBatch);
-		*/	
+		
 		matPanel.setBackground(Color.white);
 	
 		// Add to Main panel
