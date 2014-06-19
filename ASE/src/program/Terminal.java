@@ -75,7 +75,7 @@ public class Terminal implements ITerminal {
 			dbAccess = new DBAccess("72.13.93.206", 3307, "gruppe55", "gruppe55", "55gruppe");
 
 			try {
-				dbAccess.doSqlUpdate("UPDATE " + getDigit(con.getTerminalResponse("S")));
+				dbAccess.doSqlUpdate("INSERT INTO pbcomponent VALUES('" + productBatchNumber + "', '" + mb_id +"', '" + getDigit(con.getTerminalResponse("S")) + "', '" + tara + "', '" + u_id + "')");
 			} catch (DALException e) {
 				e.printStackTrace();
 			}
