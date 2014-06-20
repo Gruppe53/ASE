@@ -140,7 +140,7 @@ public class TerminalGUI extends JPanel {
 		textAreaConsole.setLineWrap(true);
 		textAreaConsole.setWrapStyleWord(true);
 		textAreaConsole.setEditable(false);
-		textAreaConsole.append("[" + getDate() + "]\tType an IP to connect.\n");
+		textAreaConsole.append("[" + getDate() + "]\tVælg produktbatch nummer, klik ok og klik på råvarebatch vinduet\n");
 		
 		add(txtPanel);
 		
