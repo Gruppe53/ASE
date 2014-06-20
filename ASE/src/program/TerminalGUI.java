@@ -42,7 +42,7 @@ public class TerminalGUI extends JPanel {
 		
 	// Buttons
 	private JButton TerminalRead = new JButton("Read");
-	private JButton TerminalOkWeight = new JButton("Ok");
+	private JButton TerminalOkWeight = new JButton("Afvej");
 	private JButton TerminalOkProductBatch = new JButton("Ok");
 	private JButton TerminalOkMaterialBatch= new JButton("Ok");
 	
