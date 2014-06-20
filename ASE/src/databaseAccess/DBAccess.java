@@ -53,6 +53,10 @@ public class DBAccess {
 			throw e;
 		}
 	}
+	public void closeSqlNonRS() throws SQLException {
+		this.statement.close();
+		this.connect.close();
+	}
 	
 	public void closeSql() throws SQLException {
 		this.resultSet.close();

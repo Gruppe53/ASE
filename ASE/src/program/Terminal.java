@@ -7,14 +7,12 @@ import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import users.GuiLogin;
 import databaseAccess.*;
 
 
 
 public class Terminal implements ITerminal {
 	
-	private GuiLogin oprIdDatabase;
 	private int okcount = 0;
 	private ITerminalConnection con;
 	private DBAccess dbAccess;
@@ -84,9 +82,9 @@ public class Terminal implements ITerminal {
 			dbAccess = new DBAccess();
 			int rs;
 			try {
-			rs = dbAccess.doSqlUpdate("INSERT INTO pbcomponent VALUES('" + productBatchNumber + "', '" + materialBatchId +"', '" + nettoTemp + "', '" + taraTemp + "', '" + oprIdDatabase.getUserId() + "')");
+			rs = dbAccess.doSqlUpdate("INSERT INTO pbcomponent VALUES('" + productBatchNumber + "', '" + materialBatchId +"', '" + nettoTemp + "', '" + taraTemp + "', '" + 1 + "')");
 			System.out.println(rs);
-			dbAccess.closeSql();
+			dbAccess.closeSqlNonRS();
 			} catch (DALException e) {
 				e.printStackTrace();
 			}
@@ -179,7 +177,7 @@ public class Terminal implements ITerminal {
 		}
 		finally{
 			try{
-				dbAccess.closeSql();
+				dbAccess.closeSqlNonRS();
 				prescriptionNumber.close();
 			}
 			catch (SQLException e) {
