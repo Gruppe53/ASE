@@ -6,7 +6,7 @@ public class DBInfo {
 	private String DBDatabase;
 	private String DBUserName;
 	private String DBPassword;
-	final int whichserver = 2;
+	final int whichserver = 1;
 
 	public DBInfo() {
 		 

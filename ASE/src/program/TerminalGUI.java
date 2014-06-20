@@ -69,6 +69,28 @@ public class TerminalGUI extends JPanel {
 		productBatchPanel.setBackground(Color.decode("#ffffff"));
 		productBatchPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.decode("#d5dfe5")), "Produktbatch"));
 		
+		ArrayList<Integer> productBatchIDs = new ArrayList<Integer>();
+		
+		DBAccess con = new DBAccess();
+						
+		dropDownProductBatch = new JComboBox<Integer>();
+		try {
+			ResultSet rs = con.doSqlQuery("SELECT * FROM productbatch WHERE status = 0 OR 1");
+			
+	    	while(rs.next()) {
+	    		productBatchIDs.add(rs.getInt("pb_id"));
+	    	}
+	    	con.closeSql();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+
+		
+		for(int i : productBatchIDs) {
+			dropDownProductBatch.addItem(i);
+		
+
+		}
 		
 		productBatchPanel.add(productBatch);
 		productBatchPanel.add(dropDownProductBatch);
@@ -118,7 +140,7 @@ public class TerminalGUI extends JPanel {
 		
 		add(txtPanel);
 		
-		ArrayList<Integer> productBatchIDs = new ArrayList<Integer>();
+		/*ArrayList<Integer> productBatchIDs = new ArrayList<Integer>();
 		
 		DBAccess con = new DBAccess();
 						
@@ -139,7 +161,7 @@ public class TerminalGUI extends JPanel {
 			dropDownProductBatch.addItem(i);
 		
 
-		}
+		}*/
 		
 		
 		recept = new JScrollPane(textAreaPrescription);
