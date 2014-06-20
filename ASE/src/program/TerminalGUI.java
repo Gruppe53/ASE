@@ -173,6 +173,8 @@ public class TerminalGUI extends JPanel {
 		textAreaPrescription.setWrapStyleWord(true);
 		textAreaPrescription.setEditable(false);
 		
+		
+		
 		TerminalRead.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -215,7 +217,7 @@ public class TerminalGUI extends JPanel {
         			f.printStackTrace();
         		}
         		
-
+        		materialBatchPanel.add(dropDownMaterialBatch);
         		
             	String productBatchNumber = dropDownProductBatch.getSelectedItem().toString();
             	
