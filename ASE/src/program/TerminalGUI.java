@@ -91,6 +91,14 @@ public class TerminalGUI extends JPanel {
 		
 
 		}
+		recept = new JScrollPane(textAreaPrescription);
+		recept.setBackground(Color.white);
+		recept.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.decode("#d5dfe5")),"Recept"));
+		recept.setPreferredSize(new Dimension(200,50));
+		
+		textAreaPrescription.setLineWrap(true);
+		textAreaPrescription.setWrapStyleWord(true);
+		textAreaPrescription.setEditable(false);
 		
 		productBatchPanel.add(productBatch);
 		productBatchPanel.add(dropDownProductBatch);
@@ -162,18 +170,6 @@ public class TerminalGUI extends JPanel {
 		
 
 		}*/
-		
-		
-		recept = new JScrollPane(textAreaPrescription);
-		recept.setBackground(Color.white);
-		recept.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.decode("#d5dfe5")),"Recept"));
-		recept.setPreferredSize(new Dimension(200,50));
-		
-		textAreaPrescription.setLineWrap(true);
-		textAreaPrescription.setWrapStyleWord(true);
-		textAreaPrescription.setEditable(false);
-		
-		
 		
 		TerminalRead.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
