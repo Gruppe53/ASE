@@ -200,7 +200,7 @@ public class Terminal implements ITerminal {
 		String materialId = null;
 		dbAccess = new DBAccess();
 		try{
-			materialIdResultSet = dbAccess.doSqlQuery("SELECT m_id FROM matBatch WHERE mb_id = '" + materialIdNumber + "'");
+			materialIdResultSet = dbAccess.doSqlQuery("SELECT m_id FROM matbatch WHERE mb_id = '" + materialIdNumber + "'");
 			if(materialIdResultSet.next()){
 				materialId = materialIdResultSet.getString("m_id");
 				
