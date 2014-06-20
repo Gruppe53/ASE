@@ -113,10 +113,6 @@ public class TerminalGUI extends JPanel {
 		materialBatchPanel.setBackground(Color.decode("#ffffff"));
 		materialBatchPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.decode("#d5dfe5")), "Råvarebatch"));
 		
-		materialBatchPanel.add(materialBatch);
-		materialBatchPanel.add(dropDownMaterialBatch);
-		materialBatchPanel.add(TerminalOkMaterialBatch);
-		
 		add(materialBatchPanel, "wrap");
 		
 		// Commands panel settings
@@ -213,7 +209,6 @@ public class TerminalGUI extends JPanel {
         			f.printStackTrace();
         		}
         		
-        		materialBatchPanel.removeAll();
         		materialBatchPanel.add(materialBatch);
         		materialBatchPanel.add(dropDownMaterialBatch);
         		materialBatchPanel.add(TerminalOkMaterialBatch);
