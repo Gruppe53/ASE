@@ -126,6 +126,8 @@ public class TerminalGUI extends JPanel {
 		materialBatchPanel.add(materialBatch);
 		materialBatchPanel.add(dropDownMaterialBatch);
 		materialBatchPanel.add(TerminalOkMaterialBatch);
+		dropDownMaterialBatch.setEnabled(false);
+		TerminalOkMaterialBatch.setEnabled(false);
 		add(commandsPanel, "wrap");
 
 
@@ -216,6 +218,8 @@ public class TerminalGUI extends JPanel {
         		materialBatchPanel.add(materialBatch);
         		materialBatchPanel.add(dropDownMaterialBatch);
         		materialBatchPanel.add(TerminalOkMaterialBatch);
+        		dropDownMaterialBatch.setEnabled(true);
+        		TerminalOkMaterialBatch.setEnabled(true);
         		
             	String productBatchNumber = dropDownProductBatch.getSelectedItem().toString();
             	
@@ -326,8 +330,12 @@ public class TerminalGUI extends JPanel {
 			if(buttonPressedCount > 1){
 				TerminalOkWeight.setEnabled(false);
 				TerminalRead.setEnabled(false);
-				dropDownMaterialBatch.removeAll();
-				//dropDownMaterialBatch.add(comp);
+				materialBatchPanel.removeAll();
+        		materialBatchPanel.add(materialBatch);
+        		materialBatchPanel.add(dropDownMaterialBatch);
+        		materialBatchPanel.add(TerminalOkMaterialBatch);
+        		dropDownMaterialBatch.setEnabled(true);
+        		TerminalOkMaterialBatch.setEnabled(true);
 				//dropDownMaterial
 				//TODO denne råvarebatch er færdig - skift den.
 			}
