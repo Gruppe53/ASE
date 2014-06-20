@@ -218,7 +218,9 @@ public class TerminalGUI extends JPanel {
         		}
         		
         		materialBatchPanel.removeAll();
+        		materialBatchPanel.add(materialBatch);
         		materialBatchPanel.add(dropDownMaterialBatch);
+        		materialBatchPanel.add(TerminalOkMaterialBatch);
         		
             	String productBatchNumber = dropDownProductBatch.getSelectedItem().toString();
             	
