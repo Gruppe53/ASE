@@ -74,29 +74,27 @@ public class Terminal implements ITerminal {
 		}
 		else 
 		if (okcount == 1) {
-			okcount++;
 			taraTemp = getCurrentWeight();
+			okcount++;
 			return terminalTare();
 		}
 		else {
 			if(tolerableWeight(productBatchNumber, materialBatchId))
-			okcount++;
 			nettoTemp = getCurrentWeight();
 			dbAccess = new DBAccess();
+			int rs;
 			try {
-				dbAccess.doSqlUpdate("INSERT INTO pbcomponent VALUES('" + productBatchNumber + "', '" + materialBatchId +"', '" + nettoTemp + "', '" + taraTemp + "', '" + oprIdDatabase.getUserId() + "')");
+			rs = dbAccess.doSqlUpdate("INSERT INTO pbcomponent VALUES('" + productBatchNumber + "', '" + materialBatchId +"', '" + nettoTemp + "', '" + taraTemp + "', '" + oprIdDatabase.getUserId() + "')");
+			System.out.println(rs);
+			dbAccess.closeSql();
 			} catch (DALException e) {
 				e.printStackTrace();
 			}
-			finally{
-				try{
-					dbAccess.closeSql();
-				}
-				catch (SQLException e) {
-					e.printStackTrace();
+			catch (SQLException e) {
+				e.printStackTrace();
 				}
 			}
-		}
+		okcount++;
 		return terminalTare();
 		}
 		
