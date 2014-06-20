@@ -123,6 +123,9 @@ public class TerminalGUI extends JPanel {
 		commandsPanel.add(TerminalRead);
 		commandsPanel.add(TerminalOkWeight);
 		
+		materialBatchPanel.add(materialBatch);
+		materialBatchPanel.add(dropDownMaterialBatch);
+		materialBatchPanel.add(TerminalOkMaterialBatch);
 		add(commandsPanel, "wrap");
 
 
@@ -209,6 +212,7 @@ public class TerminalGUI extends JPanel {
         			f.printStackTrace();
         		}
         		
+        		materialBatchPanel.removeAll();
         		materialBatchPanel.add(materialBatch);
         		materialBatchPanel.add(dropDownMaterialBatch);
         		materialBatchPanel.add(TerminalOkMaterialBatch);
@@ -216,6 +220,7 @@ public class TerminalGUI extends JPanel {
             	String productBatchNumber = dropDownProductBatch.getSelectedItem().toString();
             	
                 try {
+                	System.out.println(getMaterialBatchId());
 					TerminalOkProductBatch(productBatchNumber);
 					TerminalOkProductBatch.setEnabled(false);
 					dropDownProductBatch.setEnabled(false);
@@ -240,7 +245,7 @@ public class TerminalGUI extends JPanel {
 		
 
 	}
-	public String getMaterialBatchId () {
+	private String getMaterialBatchId () {
 		String MB = dropDownMaterialBatch.getSelectedItem().toString();
 		String MaterialBatchId = MB.substring(1,9);
 		return MaterialBatchId;
@@ -248,6 +253,7 @@ public class TerminalGUI extends JPanel {
 	}
 	
 	private void TerminalRead() throws Exception {
+		String materialBatchId = getMaterialBatchId();
 		String productBatchNumber = dropDownProductBatch.getSelectedItem().toString();
 		double currentWeight = terminal.getCurrentWeight();
 		textAreaConsole.append("[" + getDate() + "]\t" + terminal.terminalRead() + "\n");
@@ -269,7 +275,7 @@ public class TerminalGUI extends JPanel {
 				TerminalRead.setEnabled(false);
 				buttonPressedCount++;
 			}
-				if(buttonPressedCount > 1 && terminal.tolerableWeight(productBatchNumber)) {
+				if(buttonPressedCount > 1 && terminal.tolerableWeight(productBatchNumber, materialBatchId)) {
 					textAreaConsole.append("[" + getDate() + "]\t" + "Du er inden for den tolererede vægt. Tryk ok." + "\n");
 					TerminalOkWeight.setEnabled(true);
 					TerminalRead.setEnabled(false);	
@@ -277,7 +283,7 @@ public class TerminalGUI extends JPanel {
 				}
 				
 		else {
-			if(buttonPressedCount > 1 && !(terminal.tolerableWeight(productBatchNumber))){
+			if(buttonPressedCount > 1 && !(terminal.tolerableWeight(productBatchNumber, materialBatchId))){
 				textAreaConsole.append("[" + getDate() + "]\t" + "Du er ikke inden for den ønskede mængde, tilføj eller fjern råvaren fra beholderen, kom inden for den ønskede tolerence mængde og tryk READ igen." + "\n");
 			}
 			textAreaConsole.setText("[" + getDate() + "]\t rengør vægt eller fjern evt. beholdere på vægten og tryk READ igen.");
@@ -285,15 +291,17 @@ public class TerminalGUI extends JPanel {
 	}
 	
 	private void TerminalOkMaterialBatch() throws Exception {
-		textAreaConsole.append("[" + getDate() + "]\n Råvare num.: " + terminal.terminalOkGetMaterialId() + "\n Råvare navn: " + terminal.terminalOkGetMaterialName() + "\n");
+		String materialBatchId = getMaterialBatchId();
+		textAreaConsole.append("[" + getDate() + "]\n Råvare num.: " + terminal.terminalOkGetMaterialId(materialBatchId) + "\n Råvare navn: " + terminal.terminalOkGetMaterialName(materialBatchId) + "\n");
 		dropDownMaterialBatch.setEnabled(false);
 		TerminalOkMaterialBatch.setEnabled(false);
 		TerminalRead.setEnabled(true);
 	}
 	
 	private void TerminalOkWeight() throws Exception {
+		String materialBatchId = getMaterialBatchId();
 		String productBatchNumber = dropDownProductBatch.getSelectedItem().toString();
-		textAreaConsole.append("[" + getDate() + "]\t" + terminal.terminalOkWeight(productBatchNumber) + "\n");
+		textAreaConsole.append("[" + getDate() + "]\t" + terminal.terminalOkWeight(productBatchNumber, materialBatchId) + "\n");
 		DBAccess con = new DBAccess();
 		
 		ResultSet rsi = con.doSqlQuery("SELECT COUNT(*) FROM precomponent WHERE pre_id = '" + terminal.terminalOkGetPrescription(productBatchNumber) + "'");
