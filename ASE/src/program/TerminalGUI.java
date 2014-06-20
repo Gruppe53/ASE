@@ -220,7 +220,6 @@ public class TerminalGUI extends JPanel {
             	String productBatchNumber = dropDownProductBatch.getSelectedItem().toString();
             	
                 try {
-                	System.out.println(getMaterialBatchId());
 					TerminalOkProductBatch(productBatchNumber);
 					TerminalOkProductBatch.setEnabled(false);
 					dropDownProductBatch.setEnabled(false);
@@ -262,12 +261,13 @@ public class TerminalGUI extends JPanel {
 		}
 			
 		//makes sure that it can only begin weighing if nothings on the scale
-		if(buttonPressedCount == 0 && currentWeight <= 50) {
+		if((buttonPressedCount == 0) && (currentWeight <= 50)) {
 			textAreaConsole.append("[" + getDate() + "]\t" + "Du kan nu begynde din afvejning. Tryk ok." + "\n");
 			TerminalOkWeight.setEnabled(true);
 			TerminalRead.setEnabled(false);
 			buttonPressedCount++;
 		}
+		else{
 			//second time you press
 			if(buttonPressedCount == 1){
 				textAreaConsole.append("[" + getDate() + "]\t" + "Dette er den tarerede vægt. Tryk ok." + "\n");
@@ -275,18 +275,23 @@ public class TerminalGUI extends JPanel {
 				TerminalRead.setEnabled(false);
 				buttonPressedCount++;
 			}
+		
+			else{
 				if(buttonPressedCount > 1 && terminal.tolerableWeight(productBatchNumber, materialBatchId)) {
 					textAreaConsole.append("[" + getDate() + "]\t" + "Du er inden for den tolererede vægt. Tryk ok." + "\n");
 					TerminalOkWeight.setEnabled(true);
 					TerminalRead.setEnabled(false);	
 					buttonPressedCount++;
+				}	
+				else {
+					if(buttonPressedCount > 1 && !(terminal.tolerableWeight(productBatchNumber, materialBatchId))){
+						textAreaConsole.append("[" + getDate() + "]\t" + "Du er ikke inden for den ønskede mængde, tilføj eller fjern råvaren fra beholderen, kom inden for den ønskede tolerence mængde og tryk READ igen." + "\n");
+					}
+					else{
+						textAreaConsole.setText("[" + getDate() + "]\t rengør vægt eller fjern evt. beholdere på vægten og tryk READ igen.");
+					}
 				}
-				
-		else {
-			if(buttonPressedCount > 1 && !(terminal.tolerableWeight(productBatchNumber, materialBatchId))){
-				textAreaConsole.append("[" + getDate() + "]\t" + "Du er ikke inden for den ønskede mængde, tilføj eller fjern råvaren fra beholderen, kom inden for den ønskede tolerence mængde og tryk READ igen." + "\n");
 			}
-			textAreaConsole.setText("[" + getDate() + "]\t rengør vægt eller fjern evt. beholdere på vægten og tryk READ igen.");
 		}
 	}
 	
@@ -317,7 +322,7 @@ public class TerminalGUI extends JPanel {
 			// TODO afvejning er færdig her - alt skal nulstilles
 			
 		}
-		else
+		else{
 			if(buttonPressedCount > 1){
 				TerminalOkWeight.setEnabled(false);
 				TerminalRead.setEnabled(false);
@@ -326,9 +331,10 @@ public class TerminalGUI extends JPanel {
 				//dropDownMaterial
 				//TODO denne råvarebatch er færdig - skift den.
 			}
-		else{
-		TerminalOkWeight.setEnabled(false);
-		TerminalRead.setEnabled(true);
+			else{
+				TerminalOkWeight.setEnabled(false);
+				TerminalRead.setEnabled(true);
+			}
 		}
 		con.closeSql();
 	}
