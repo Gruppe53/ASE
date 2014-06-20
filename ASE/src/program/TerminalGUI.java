@@ -241,7 +241,8 @@ public class TerminalGUI extends JPanel {
 
 	}
 	public String getMaterialBatchId () {
-		String MaterialBatchId = dropDownProductBatch.getSelectedItem().toString();
+		String MB = dropDownMaterialBatch.getSelectedItem().toString();
+		String MaterialBatchId = MB.substring(1,9);
 		return MaterialBatchId;
 		
 	}
